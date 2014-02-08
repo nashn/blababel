@@ -3,4 +3,11 @@ blababel
 
 App Jam 2014
 
-A language learning site
+Description:
+	A language learning site
+
+Members:
+Greg Jeckell
+ChiaHao Chen
+She Nie (Nash)
+
