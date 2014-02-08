@@ -1,5 +1,8 @@
+# main.py
+
 import webapp2
 
+# Later will change into Handler-Template
 index = open('index.html', 'r')
 
 class MainPage(webapp2.RequestHandler):
