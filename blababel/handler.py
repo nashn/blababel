@@ -108,7 +108,11 @@ class LessonEntry(Handler):
 				}
 		self.render('entry.html', template_values=tvalues)
 		
-
+class Lesson1Page(Handler):
+	def get(self):
+		tvalues = {'authors': authors
+								}
+		self.render('Lesson1CN.html', template_values=tvalues)
 
 
 

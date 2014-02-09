@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Chinese Lesson 1{% endblock %}
+
+{% block content %}
+
+{% for e in entry %}
+<div>
+
+  <div class="col-sm-3 col-md-3" style="float:left; width:300px;">
+    <div class="thumbnail">
+
+      <img src={{ e[1] }} alt="...">
+      <div class="caption">
+	{{ e[2] }}
+        <h3 style="text-align:left;"> {{ e[0] }} </h>
+  
+     <form>
+<span style="display:inline-block; width: 120px;"></span>
+	<button type="button" class="btn btn-primary">Boy</button>
+	</form>
+
+    </div>
+  </div>
+</div>
+
+{% endfor %}
+
+
+{% endblock %}
