@@ -1,13 +1,13 @@
+# !/usr/python2.7
 # main.py
 
 import webapp2
 
-# Later will change into Handler-Template
-index = open('index.html', 'r')
+from handler import *
 
-class MainPage(webapp2.RequestHandler):
-	def get(self):
-		self.response.headers['Content-Type'] = 'text/html'
-		self.response.write(index.readlines())
 
-application = webapp2.WSGIApplication([('/', MainPage),], debug=True)
+handlers = [('/', MainPage),
+			('/test', TestPage)
+]
+
+application = webapp2.WSGIApplication(handlers, debug=True)

@@ -5,5 +5,27 @@ api_version: 1
 threadsafe: true
 
 handlers:
+# this is for loading .css files
+- url: /css
+  static_dir: css
+
+# this is for loading image files
+- url: /img
+  static_dir: img
+
+# this is for loading image files
+- url: /js
+  static_dir: js
+
+
 - url: /.*
   script: main.application
+
+
+
+libraries:
+- name: webapp2
+  version: latest
+- name: jinja2
+  version: latest
+
