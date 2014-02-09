@@ -3,6 +3,11 @@
 # C extensions
 *.so
 
+# Temp files
+*.py~
+*.md~
+*.html~
+
 # Packages
 *.egg
 *.egg-info
