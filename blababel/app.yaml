@@ -17,6 +17,10 @@ handlers:
 - url: /js
   static_dir: js
 
+# this is for loading lesson files
+#- url: /lessons
+#  static_dir: lessons
+
 
 - url: /.*
   script: main.application

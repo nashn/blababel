@@ -8,8 +8,10 @@ import webapp2
 from handler import *
 
 
-handlers = [('/', MainPage),
-			('/test', TestPage)
+handlers = [('/base', BasePage),
+			('/', MainPage),
+			('/building', BuildPage),
+			('/chinese', ChinesePage)
 ]
 
 application = webapp2.WSGIApplication(handlers, debug=True)

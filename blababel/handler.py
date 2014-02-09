@@ -16,18 +16,40 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True
     )
 
+authors = ['Chia-Hao Chen', 'She Nie', 'Greg Jeckell']
+
+class BasePage(webapp2.RequestHandler):
+
+	def get(self):
+		template_values = {'authors': authors
+						}
+		template = JINJA_ENVIRONMENT.get_template('base.html')
+		#self.response.write('''<p>good till this part</p>''')
+		self.response.write(template.render(template_values))
+
 class MainPage(webapp2.RequestHandler):
 
 	def get(self):
+		template_values = {'authors': authors
+						}
 		template = JINJA_ENVIRONMENT.get_template('index.html')
-		#self.response.write('''<p>good till this part</p>''')
-		self.response.write(template.render())
+		self.response.write(template.render(template_values))
 
-
-class TestPage(webapp2.RequestHandler):
+class BuildPage(webapp2.RequestHandler):
 
 	def get(self):
 		teststring = 'Hello World!'
-		template_values = {'teststring': teststring}
-		template = JINJA_ENVIRONMENT.get_template('test.html')
+		template_values = {'authors': authors,
+						'teststring': teststring
+						}
+		template = JINJA_ENVIRONMENT.get_template('build.html')
+		self.response.write(template.render(template_values))
+
+class ChinesePage(webapp2.RequestHandler):
+
+	def get(self):
+		
+		template_values = {'authors': authors,
+						}
+		template = JINJA_ENVIRONMENT.get_template('chinese.html')
 		self.response.write(template.render(template_values))
