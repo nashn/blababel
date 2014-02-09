@@ -1,6 +1,10 @@
 # !/usr/python2.7
 # handler.py
 
+'''
+Adding a new page with a new handlers
+Maybe change to generic handler class later
+'''
 import os
 
 import webapp2
