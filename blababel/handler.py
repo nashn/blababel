@@ -110,10 +110,10 @@ class LessonEntry(Handler):
 		
 class Lesson1Page(Handler):
 	def get(self):
-		entry01 = ChineseLesson01(english='Boy', chinese='男孩', imageULR='boy.png', notes=[])
-		entry02 = ChineseLesson01(english='Girl', chinese='女孩', imageULR='girl.png', notes=[])
-		entry03 = ChineseLesson01(english='Apple', chinese='苹果', imageULR='apple.png', notes=[])
-		entry04 = ChineseLesson01(english='Woman', chinese='女人', imageULR='woman.png', notes=[])
+		entry01 = ChineseLesson01(english='Boy', chinese='nanhai', imageULR='boy.png', notes='123')
+		entry02 = ChineseLesson01(english='Girl', chinese='nvhai', imageULR='girl.png', notes='456')
+		entry03 = ChineseLesson01(english='Apple', chinese='pinguo', imageULR='apple.png', notes='789')
+		entry04 = ChineseLesson01(english='Woman', chinese='nvren', imageULR='woman.png', notes='321')
 		entry01.put()
 		entry02.put()
 		entry03.put()
@@ -129,7 +129,7 @@ class Lesson1Page(Handler):
 class ChinesePage(Handler):
 	def get(self):
 		tvalues = {'authors': authors
-								}
+			}
 		self.render('chinese.html', template_values=tvalues)
 
 class User(db.Model):
