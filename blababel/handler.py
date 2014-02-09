@@ -54,6 +54,33 @@ class BuildPage(Handler):
 					}
 		self.render('build.html', template_values=tvalues)
 
+class RankPage(Handler):
+	def get(self):
+		tvalues = {'authors': authors,
+					'teststring' : 'Hello World'
+					}
+		self.render('rank.html', template_values=tvalues)
+	
+	def post(self):
+		return 0
+
+class AboutPage(Handler):
+	def get(self):
+		tvalues = {'authors': authors,
+					'teststring' : 'Hello World'
+					}
+		self.render('about.html', template_values=tvalues)
+
+class DonationPage(Handler):
+	def get(self):
+		tvalues = {'authors': authors,
+					'teststring' : 'Hello World'
+					}
+		self.render('donation.html', template_values=tvalues)
+
+	def post(self):
+		return 0
+
 # this may be used to handle error situation later
 class ErrorPage(Handler):
 	def get(self):
@@ -74,7 +101,7 @@ class LessonPage(Handler):
 	
 	def post(self):
 		return 0
-	
+
 class LessonEntry(Handler):
 	def get(self):
 		tvalues = {'authors': authors
