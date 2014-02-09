@@ -71,7 +71,7 @@
   <div class="container-fluid">
     <br>
     <center>
-    <p>&copy; 2014 <a href="/" style="text-decoration: none">Blababel</a>, Powered By <a href="https://developers.google.com/appengine" style="text-decoration: none">GAE</a> and <a href="http://getbootstrap.com/" style="text-decoration: none">Bootstrap</a>,  Designed by 
+    <p>&copy; 2014 <a href="/">Blababel</a>, Powered By <a href="https://developers.google.com/appengine">GAE</a> and <a href="http://getbootstrap.com/">Bootstrap</a>,  Designed by 
     	{% for name in authors %}
     	<a> {{ name }}, </a>
     	{% endfor %}
