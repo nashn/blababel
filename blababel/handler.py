@@ -119,8 +119,9 @@ class Lesson1Page(Handler):
 		entry03.put()
 		entry04.put()
 		entries = db.GqlQuery("SELECT * FROM ChineseLesson01").fetch(4)
-		tvalues = {'authors': authors
-								}
+		tvalues = {'authors': authors,
+					'entry': entries
+							}
 		self.render('Lesson1CN.html', template_values=tvalues)
 
 
