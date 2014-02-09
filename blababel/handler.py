@@ -37,14 +37,15 @@ class MainPage(Handler):
 		self.render('index.html', template_values=tvalues)
 
 	def post(self):
-		firstname = self.request.get('firstname')
-		lastname = self.request.get('lastname')
-		email = self.request.get('email')
-		password = self.request.get('password')
-		sex = self.request.get('sex')
-		params = {'firstname':firstname, 'lastname':lastname, 
-              'email':email, 'password':password, 'sex':sex}
-		self.response.write(params) #TODO handle the post request just demonstrating for now
+		f = self.request.get('firstname')
+		l = self.request.get('lastname')
+		e = self.request.get('email')
+		p = self.request.get('password')
+		pp = self.request.get('passwordRe')
+		user = User(firstname=f, lastname=l, email=e, password=p)
+		user.put()
+		newUser = db.GqlQuery("SELECT * FROM User").fetch(10)
+		self.response.write(newUser[0].firstname)
 
 class BuildPage(Handler):
 	def get(self):
@@ -72,7 +73,8 @@ class LessonPage(Handler):
 		self.render('lesson.html', template_values=tvalues)
 	
 	def post(self):
-		
+		return 0
+	
 class LessonEntry(Handler):
 	def get(self):
 		tvalues = {'authors': authors
@@ -88,3 +90,12 @@ class ChinesePage(Handler):
 		tvalues = {'authors': authors
 								}
 		self.render('chinese.html', template_values=tvalues)
+
+class User(db.Model):
+	firstname = db.StringProperty(required = True)
+	lastname = db.StringProperty(required = True)
+	email = db.StringProperty(required = True)
+	password = db.StringProperty(required = True)
+
+
+	
