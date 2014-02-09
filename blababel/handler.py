@@ -14,21 +14,23 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True
     )
-HEADER_TEMPLATE = JINJA_ENVIRONMENT.get_template('template/header.html')
-NAVIGATION_TEMPLATE = JINJA_ENVIRONMENT.get_template('template/navigation.html')
-FOOTER_TEMPLATE = JINJA_ENVIRONMENT.get_template('template/footer.html')
 
-def build_page(self, htmlFile, params={}):
-		page = JINJA_ENVIRONMENT.get_template(htmlFile)
-		self.response.write(HEADER_TEMPLATE.render())
-		self.response.write(NAVIGATION_TEMPLATE.render())
-		self.response.write(page.render(params))
-		self.response.write(FOOTER_TEMPLATE.render())
+authors = ['Chia-Hao Chen', 'She Nie', 'Greg Jeckell']
 
-class MainPage(webapp2.RequestHandler):
+class BasePage(webapp2.RequestHandler):
 
 	def get(self):
-		build_page(self, 'index.html')
+		template_values = {'authors': authors
+						}
+		template = JINJA_ENVIRONMENT.get_template('base.html')
+		self.response.write(template.render(template_values))
+
+class MainPage(webapp2.RequestHandler):
+	def get(self):
+		template_values = {'authors': authors
+						}
+		template = JINJA_ENVIRONMENT.get_template('index.html')
+		self.response.write(template.render(template_values))
 
 	def post(self):
 		firstname = self.request.get('firstname')
@@ -36,13 +38,24 @@ class MainPage(webapp2.RequestHandler):
 		email = self.request.get('email')
 		password = self.request.get('password')
 		sex = self.request.get('sex')
-		params = {'firstname':firstname, 'lastname':lastname, 'email':email, 'password':password, 'sex':sex}
-		build_page(self, 'test.html', params)
+		params = {'firstname':firstname, 'lastname':lastname, 
+              'email':email, 'password':password, 'sex':sex}
+		self.response.write(params) #TODO handle the post request just demonstrating for now
 
-class TestPage(webapp2.RequestHandler):
+class BuildPage(webapp2.RequestHandler):
 
 	def get(self):
 		teststring = 'Hello World!'
-		template_values = {'teststring': teststring}
-		template = JINJA_ENVIRONMENT.get_template('test.html')
+		template_values = {'authors': authors,
+						'teststring': teststring
+						}
+		template = JINJA_ENVIRONMENT.get_template('build.html')
+		self.response.write(template.render(template_values))
+
+class ChinesePage(webapp2.RequestHandler):
+
+	def get(self):
+		template_values = {'authors': authors,
+						}
+		template = JINJA_ENVIRONMENT.get_template('chinese.html')
 		self.response.write(template.render(template_values))

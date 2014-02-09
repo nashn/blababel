@@ -1,4 +1,20 @@
-<!-- navigation -->
+<!DOCTYPE html>
+{% autoescape true %}
+
+<html>
+<head>
+{% block head %}
+
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="js/bootstrap.js"></script>
+
+<title>{% block title %}{% endblock %}</title>
+{% endblock %}
+</head>
+
+<body>
+{% block nevigation %}
 <nav class="navbar navbar-inverse" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -12,24 +28,23 @@
       <a class="navbar-brand" href="/">Blababel</a>
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
+	<!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav"> 	
         
         <li class="dropdown">
           <a href="/" class="dropdown-toggle" data-toggle="dropdown">Lessons <b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a href="/">Chinese</a></li>
+            <li><a href="/chinese">Chinese</a></li>
             <li><a href="/">Korean</a></li>
             <li><a href="/">Japanese</a></li>
             <li class="divider"></li>
             <li><a href="/">Separated link</a></li>
           </ul>
         </li>
-
         <li><a href="/">Rank</a></li>
-	    <li><a href="/">About</a></li>
-	    <li><a href="/">Donation</a></li>
+	<li><a href="/">About</a></li>
+	<li><a href="/">Donation</a></li>
       </ul>
       <form class="navbar-form navbar-left" role="search">
         <div class="form-group">
@@ -38,11 +53,35 @@
         <button type="submit" class="btn btn-default">Submit</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
-	    <button type="button" class="btn btn-default navbar-btn">Sign Up</button>
-	    <button type="button" class="btn btn-default navbar-btn">Login </button>
+	<button type="button" class="btn btn-default navbar-btn">Sign Up</button>
+	<button type="button" class="btn btn-default navbar-btn">Login </button>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-<!-- /.navigation -->
+{% endblock %}
 
+{% block content %}
+
+{% endblock %}
+
+{% block footer %}
+<nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+  <div class="container-fluid">
+    <br>
+    <center>
+    <p>&copy; 2014 <a href="/">Blababel</a>, Powered By <a href="https://developers.google.com/appengine">GAE</a> and <a href="http://getbootstrap.com/">Bootstrap</a>,  Designed by 
+    	{% for name in authors %}
+    	<a> {{ name }}, </a>
+    	{% endfor %}
+    </p>
+    </center>
+  </div><!-- /.container-fluid -->
+</nav>
+{% endblock %}
+
+
+</body>
+</html>
+
+{% endautoescape %}
