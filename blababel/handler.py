@@ -110,6 +110,15 @@ class LessonEntry(Handler):
 		
 class Lesson1Page(Handler):
 	def get(self):
+		entry01 = ChineseLesson01(english='Boy', chinese='男孩', imageULR='boy.png', notes=[])
+		entry02 = ChineseLesson01(english='Girl', chinese='女孩', imageULR='girl.png', notes=[])
+		entry03 = ChineseLesson01(english='Apple', chinese='苹果', imageULR='apple.png', notes=[])
+		entry04 = ChineseLesson01(english='Woman', chinese='女人', imageULR='woman.png', notes=[])
+		entry01.put()
+		entry02.put()
+		entry03.put()
+		entry04.put()
+		entries = db.GqlQuery("SELECT * FROM ChineseLesson01").fetch(4)
 		tvalues = {'authors': authors
 								}
 		self.render('Lesson1CN.html', template_values=tvalues)
@@ -128,5 +137,9 @@ class User(db.Model):
 	email = db.StringProperty(required = True)
 	password = db.StringProperty(required = True)
 
-
+class ChineseLesson01(db.Model):
+	english = db.StringProperty(required = True)
+	chinese = db.StringProperty(required = True)
+	imageULR = db.StringProperty(required = True)
+	notes = db.StringProperty()
 	
