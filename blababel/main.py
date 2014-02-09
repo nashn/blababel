@@ -10,6 +10,8 @@ from handler import *
 handlers = [('/base', BasePage),
 			('/', MainPage),
 			('/building', BuildPage),
+			('/error', ErrorPage),
+			('/lessons', LessonPage),
 			('/chinese', ChinesePage)
 ]
 

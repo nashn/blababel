@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}This is the lessons page{% endblock %}
+
+{% block content %}
+  
+  <a> Beginner </a>
+  <div>
+
+    <!-- this is for entry layout -->
+    {% for e in entry %}
+      <div> {{ e }}</div>
+
+  </div>
+
+{% endblock %}

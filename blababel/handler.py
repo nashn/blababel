@@ -21,11 +21,10 @@ authors = ['Chia-Hao Chen', 'She Nie', 'Greg Jeckell']
 class Handler(webapp2.RequestHandler):
     def write(self, *a, **kw):
         self.response.out.write(*a, **kw)
-    def render_str(self, template, **params):
-        t = JINJA_ENVIRONMENT.get_template(template)
-        return t.render(params)
-    def render(self, template, **kw):
-        self.write(self.render_str(template, **kw))
+    
+    def render(self, template, template_values):
+    	t = JINJA_ENVIRONMENT.get_template(template)
+        self.write(t.render(template_values))
 
 class BasePage(Handler):
 	def get(self):
@@ -33,7 +32,9 @@ class BasePage(Handler):
 
 class MainPage(Handler):
 	def get(self):
-		self.render('index.html')
+		tvalues = {'authors': authors
+		}
+		self.render('index.html', template_values=tvalues)
 
 	def post(self):
 		firstname = self.request.get('firstname')
@@ -47,9 +48,43 @@ class MainPage(Handler):
 
 class BuildPage(Handler):
 	def get(self):
-		s = 'Hello World!'
-		self.render('build.html', teststring=s)
+		tvalues = {'authors': authors,
+					'teststring' : 'Hello World'
+					}
+		self.render('build.html', template_values=tvalues)
+
+# this may be used to handle error situation later
+class ErrorPage(Handler):
+	def get(self):
+		tvalues = {'authors': authors,
+					'teststring' : 'Hello World'
+					}
+		self.render('404.html', template_values=tvalues)
+####################################
+
+class LessonPage(Handler):
+	def get(self):
+		# entry = get from database
+
+		tvalues = {'authors': authors,
+					'entry' : entry
+				}
+		self.render('lesson.html', template_values=tvalues)
+	
+	def post(self):
+		
+class LessonEntry(Handler):
+	def get(self):
+		tvalues = {'authors': authors
+				}
+		self.render('entry.html', template_values=tvalues)
+		
+
+
+
 
 class ChinesePage(Handler):
 	def get(self):
-		self.render('chinese.html', authors=['Chia-Hao Chen', 'She Nie', 'Greg Jeckell'])
+		tvalues = {'authors': authors
+								}
+		self.render('chinese.html', template_values=tvalues)
