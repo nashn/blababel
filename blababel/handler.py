@@ -6,9 +6,9 @@ Adding a new page with a new handlers
 Maybe change to generic handler class later
 '''
 import os
-
 import webapp2
 import jinja2
+from google.appengine.ext import db
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -16,18 +16,40 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True
     )
 
-class MainPage(webapp2.RequestHandler):
+authors = ['Chia-Hao Chen', 'She Nie', 'Greg Jeckell']
 
+class Handler(webapp2.RequestHandler):
+    def write(self, *a, **kw):
+        self.response.out.write(*a, **kw)
+    def render_str(self, template, **params):
+        t = JINJA_ENVIRONMENT.get_template(template)
+        return t.render(params)
+    def render(self, template, **kw):
+        self.write(self.render_str(template, **kw))
+
+class BasePage(Handler):
 	def get(self):
-		template = JINJA_ENVIRONMENT.get_template('index.html')
-		#self.response.write('''<p>good till this part</p>''')
-		self.response.write(template.render())
+		self.render('base.html')
 
-
-class TestPage(webapp2.RequestHandler):
-
+class MainPage(Handler):
 	def get(self):
-		teststring = 'Hello World!'
-		template_values = {'teststring': teststring}
-		template = JINJA_ENVIRONMENT.get_template('test.html')
-		self.response.write(template.render(template_values))
+		self.render('index.html')
+
+	def post(self):
+		firstname = self.request.get('firstname')
+		lastname = self.request.get('lastname')
+		email = self.request.get('email')
+		password = self.request.get('password')
+		sex = self.request.get('sex')
+		params = {'firstname':firstname, 'lastname':lastname, 
+              'email':email, 'password':password, 'sex':sex}
+		self.response.write(params) #TODO handle the post request just demonstrating for now
+
+class BuildPage(Handler):
+	def get(self):
+		s = 'Hello World!'
+		self.render('build.html', teststring=s)
+
+class ChinesePage(Handler):
+	def get(self):
+		self.render('chinese.html', authors=['Chia-Hao Chen', 'She Nie', 'Greg Jeckell'])
