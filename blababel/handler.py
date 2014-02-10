@@ -120,20 +120,16 @@ class LessonEntry(Handler):
 		
 class Lesson1Page(Handler):
 	def get(self):
-		entry01 = ChineseLesson01(english='Boy', chinese='nanhai', imageULR='boy.png', notes='123')
-		entry02 = ChineseLesson01(english='Girl', chinese='nvhai', imageULR='girl.png', notes='456')
-		entry03 = ChineseLesson01(english='Apple', chinese='pinguo', imageULR='apple.png', notes='789')
-		entry04 = ChineseLesson01(english='Woman', chinese='nvren', imageULR='woman.png', notes='321')
-		entry01.put()
-		entry02.put()
-		entry03.put()
-		entry04.put()
+		ChineseLesson01(1, 'Boy', 'nanhai', 'boy.png', '123')
+		ChineseLesson01(2, 'Girl', 'nvhai', 'girl.png', '456')
+		ChineseLesson01(3, 'Apple', 'pinguo', 'apple.png', '789')
+		ChineseLesson01(4, 'Woman', 'nvren', 'woman.png', '321')
+		
 		entries = db.GqlQuery("SELECT * FROM ChineseLesson01").fetch(4)
 		tvalues = {'authors': authors,
 					'entry': entries
 							}
 		self.render('Lesson1CN.html', template_values=tvalues)
-
 
 
 class ChinesePage(Handler):
@@ -142,15 +138,51 @@ class ChinesePage(Handler):
 			}
 		self.render('chinese.html', template_values=tvalues)
 
+
+###########################################
+#
+# The following code maybe seperated into an independent database file
+#
+###########################################
 class User(db.Model):
 	firstname = db.StringProperty(required = True)
 	lastname = db.StringProperty(required = True)
 	email = db.StringProperty(required = True)
 	password = db.StringProperty(required = True)
 
-class ChineseLesson01(db.Model):
+class Offer(db.Model):
+	course_id = db.IntegerProperty(required=True)
+	creater = db.StringProperty(required = True)
+	language = db.StringProperty(required = True)
+	lesson_id = db.IntegerProperty(required = True)
+	imageULR = db.StringProperty(required = True)
+	desc = db.StringProperty()
+	
+class ChineseOffer(course_id, creater, language, lesson_id, imageULR, desc):
+	o = Offer()
+	o.course_id = course_id
+	o.creater = creater
+	o.language = language
+	o.lesson_id = lesson_id
+	o.imageULR = imageULR
+	o.desc = desc
+	o.put()
+
+class Lesson(db.Model):
+	lesson_id = db.IntegerProperty(required=True)
+	creater = db.StringProperty(required = True)
 	english = db.StringProperty(required = True)
-	chinese = db.StringProperty(required = True)
+	translation = db.StringProperty(required = True)
 	imageULR = db.StringProperty(required = True)
 	notes = db.StringProperty()
-	
+	question_answer = db.StringProperty()
+
+class ChineseLesson01(c_id, english, chinese, imageULR, notes, question_answer):
+	l = Lesson()
+	l.lesson_id = c_id
+	l.english = english
+	l.translation = chinese
+	l.imageULR = imageULR
+	l.notes = notes
+	l.question_answer = question_answer
+	l.put()
