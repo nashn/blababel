@@ -14,6 +14,7 @@ handlers = [('/base', BasePage),
 			('/rank', RankPage),
 			('/about', AboutPage),
 			('/donation', DonationPage),
+			('/game', GamePage),
 			#the following is lessons, later
 			('/lessons', LessonPage),
 			('/chinese', ChinesePage),

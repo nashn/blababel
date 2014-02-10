@@ -81,6 +81,16 @@ class DonationPage(Handler):
 	def post(self):
 		return 0
 
+class GamePage(Handler):
+	def get(self):
+		tvalues = {'authors': authors,
+					'teststring' : 'Hello World'
+					}
+		self.render('game.html', template_values=tvalues)
+
+	def post(self):
+		return 0
+
 # this may be used to handle error situation later
 class ErrorPage(Handler):
 	def get(self):
