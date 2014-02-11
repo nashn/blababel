@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Build a Course{% endblock %}
+{% block content %}
+
+<form class="form-horizontal" method="post">
+	<fieldset>
+		<legend><strong>Build Lesson</strong></legend>
+		<div class="control-group">
+        	<label class="control-label" for="course_id">Course ID</label>
+        	<div class="controls">
+            	<input type="number" name="course_id" placeholder="Course ID">
+          	</div>
+        </div>
+        <div class="control-group">
+        	<label class="control-label" for="course_title">Course Title</label>
+        	<div class="controls">
+            	<input type="number" name="course_title" placeholder="Course Title">
+          	</div>
+        </div>
+        <div class="control-group">
+        	<label class="control-label" for="author">Author</label>
+        	<div class="controls">
+            	<input type="text" name="author" placeholder="Author">
+          	</div>
+        </div>
+		<div class="control-group">
+        	<label class="control-label" for="course_img">Course Image URL</label>
+        	<div class="controls">
+            	<input type="text" name="course_img" placeholder="ImageURL">
+          	</div>
+        </div>
+		<div class="control-group">
+        	<label class="control-label" for="desc">Course Description</label>
+        	<div class="controls">
+            	<input type="text" name="desc" placeholder="Description">
+          	</div>
+        </div>
+		<div class="control-group">
+        	<label class="control-label" for="notes">Source Language</label>
+        	<div class="controls">
+            	<input type="text" name="src" placeholder="Source Language">
+          	</div>
+        </div>
+		<div class="control-group">
+        	<label class="control-label" for="notes">Destination Language</label>
+        	<div class="controls">
+            	<input type="text" name="dest" placeholder="Destination Language">
+          	</div>
+        </div>
+		<button class="btn btn-primary btn-lg" type="submit">submit</button>
+	</fieldset>
+</form>
+
+{% endblock %}

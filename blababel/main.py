@@ -19,7 +19,8 @@ handlers = [('/base', BasePage),
 			('/lessons', LessonPage),
 			('/chinese', ChinesePage),
 			('/lesson1cn', Lesson1Page),
-			('/buildLesson', BuildLesson)
+			('/buildLesson', BuildLesson),
+			('/buildCourse', BuildCourse)
 ]
 
 application = webapp2.WSGIApplication(handlers, debug=True)
