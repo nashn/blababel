@@ -98,6 +98,14 @@ class ErrorPage(Handler):
 					}
 		self.render('404.html', template_values=tvalues)
 
+
+
+####################################################################
+####################################################################
+####################################################################
+#	This part needs to be modified, still working on this part 
+#
+####################################################################
 class LessonPage(Handler):
 	def get(self):
 		tvalues = {'authors': authors,
@@ -127,6 +135,9 @@ class ChinesePage(Handler):
 		tvalues = {'authors': authors
 			}
 		self.render('chinese.html', template_values=tvalues)
+####################################################################
+
+
 
 class BuildCourse(Handler):
 	def get(self):

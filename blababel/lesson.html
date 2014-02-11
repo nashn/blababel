@@ -1,15 +1,35 @@
 {% extends "base.html" %}
-{% block title %}This is the lessons page{% endblock %}
+{% block title %} {{ lesson.name }} Lesson {{ lesson.id }} {% endblock %}
 
 {% block content %}
+
+<center><a href="/game"> Start Game !</a></center>
+<br><br><br>
+
+{% for e in lesson.entry %}
+<div>
+
+  <div class="col-sm-3 col-md-3" style="float:left; width:300px;">
+    <div class="thumbnail">
+
+      <img src='img/chinese.jpg' alt="...">
+      <div class="caption">
+	{{ e.english }}
+	{{ e.english }}
+	{{ e.chinese }}
+	{{ e.imageURL }}
+        <h3 style="text-align:left;"> {{ e.notes }} </h>
   
-  <a> Beginner </a>
-  <div>
+     <form>
+<span style="display:inline-block; width: 120px;"></span>
+	<button type="button" class="btn btn-primary">Boy</button>
+	</form>
 
-    <!-- this is for entry layout -->
-    {% for e in entry %}
-      <div> {{ e }}</div>
-
+    </div>
   </div>
+</div>
+
+{% endfor %}
+
 
 {% endblock %}
