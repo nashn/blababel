@@ -136,6 +136,7 @@ class BuildLesson(Handler):
 	def post(self):
 		l_id = int(self.request.get('lesson_id'))
 		l_title = self.request.get('lesson_title')
+		difficulty = self.request.get('diff')
 		author = self.request.get('author')
 		vocabulary = self.request.get('v').split()
 		images = self.request.get('imgs').split()
@@ -148,15 +149,17 @@ class BuildLesson(Handler):
 		src = self.request.get('src')
 		dest = self.request.get('dest')
 		
-		lesson = Lesson(lesson_id=l_id, lesson_title=l_title, author=author,
-			vocabulary=vocabulary, imgURLs=images, questions=q, answers=a,
+		lesson = Lesson(lesson_id=l_id, lesson_title=l_title, difficulty=difficulty, 
+			author=author, vocabulary=vocabulary, imgURLs=images, questions=q, answers=a,
 			notes=notes, source_language=src, destination_language=dest)
 		lesson.put()
 
-		lessons = db.GqlQuery("SELECT * FROM Lesson WHERE lesson_id=001").fetch(10)
-		s = ""
-		for entity in lessons:
-			s += "%s: %s" % (lesson.lesson_id, lesson.answers)
+		l = db.GqlQuery("SELECT * FROM Lesson WHERE lesson_id=%d" % l_id).get()
+		s = "Success! Here is the entry:\n"
+		s += "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" % (l.lesson_id, 
+			l.lesson_title, l.difficulty, 
+			l.author, l.vocabulary, l.imgURLs, l.questions, l.answers,
+			l.notes, l.source_language, l.destination_language)
 		self.response.write(s)
 
 ###########################################
@@ -170,28 +173,19 @@ class User(db.Model):
 	email = db.StringProperty(required = True)
 	password = db.StringProperty(required = True)
 
-class Offer(db.Model):
+class Course(db.Model):
 	course_id = db.IntegerProperty(required=True)
-	creater = db.StringProperty(required = True)
+	author = db.StringProperty(required = True)
 	language = db.StringProperty(required = True)
 	lesson_id = db.IntegerProperty(required = True)
 	imageULR = db.StringProperty(required = True)
 	desc = db.StringProperty()
-'''	
-class ChineseOffer(course_id, creater, language, lesson_id, imageULR, desc):
-	o = Offer()
-	o.course_id = course_id
-	o.creater = creater
-	o.language = language
-	o.lesson_id = lesson_id
-	o.imageULR = imageULR
-	o.desc = desc
-	o.put()
-'''
+
 class Lesson(db.Model):
 	lesson_id = db.IntegerProperty(required = True)
 	lesson_title = db.StringProperty(required = True)
 	author = db.StringProperty(required = True)
+	difficulty = db.StringProperty(required = True)
 	vocabulary = ObjectProperty()
 	imgURLs = ObjectProperty()
 	source_language = db.StringProperty(required = True)
@@ -199,14 +193,3 @@ class Lesson(db.Model):
 	questions = ObjectProperty()
 	answers = ObjectProperty()
 	notes = db.StringProperty()
-'''
-class ChineseLesson01(c_id, english, chinese, imageULR, notes, question_answer):
-	l = Lesson()
-	l.lesson_id = c_id
-	l.english = english
-	l.translation = chinese
-	l.imageULR = imageULR
-	l.notes = notes
-	l.question_answer = question_answer
-	l.put()
-'''
