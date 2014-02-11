@@ -7,6 +7,8 @@ import jinja2
 from classes.ObjectProperty import ObjectProperty
 from google.appengine.ext import db
 
+from schema import *
+
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
@@ -204,6 +206,7 @@ class BuildLesson(Handler):
 			l.notes, l.source_language, l.destination_language)
 		self.response.write(s)
 
+'''
 ###########################################
 #
 # The following code maybe seperated into an independent database file
@@ -237,3 +240,4 @@ class Lesson(db.Model):
 	questions = ObjectProperty()
 	answers = ObjectProperty()
 	notes = db.StringProperty()
+	'''
