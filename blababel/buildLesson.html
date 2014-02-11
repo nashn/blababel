@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Build a Lesson{% endblock %}
+{% block content %}
+
+<form class="form-horizontal" method="post">
+	<fieldset>
+		<legend><strong>Build Lesson</strong></legend>
+		<div class="control-group">
+        	<label class="control-label" for="lesson_id">Lesson ID</label>
+        	<div class="controls">
+            	<input type="number" name="lesson_id" placeholder="Lesson ID">
+          	</div>
+        </div>
+        <div class="control-group">
+        	<label class="control-label" for="lesson_title">Lesson Title</label>
+        	<div class="controls">
+            	<input type="number" name="lesson_title" placeholder="Lesson Title">
+          	</div>
+        </div>
+        <div class="control-group">
+        	<label class="control-label" for="author">Author</label>
+        	<div class="controls">
+            	<input type="text" name="author" placeholder="Author">
+          	</div>
+        </div>
+        <div class="control-group">
+        	<label class="control-label" for="v">Vocabulary</label>
+        	<div class="controls">
+            	<input type="text" name="v" placeholder="Words separate by space">
+          	</div>
+        </div>
+		<div class="control-group">
+        	<label class="control-label" for="imgs">Image URLs</label>
+        	<div class="controls">
+            	<input type="text" name="imgs" placeholder="ImageURLs separate by space">
+          	</div>
+        </div>
+		<div class="control-group">
+        	<label class="control-label" for="q0">Questions</label>
+        	<div class="controls">
+            	<input type="text" name="q0" placeholder="Question 0"><br>
+            	<input type="text" name="q1" placeholder="Question 1"><br>
+				<input type="text" name="q2" placeholder="Question 2"><br>
+				<input type="text" name="q3" placeholder="Question 3"><br>
+          	</div>
+        </div>
+        <div class="control-group">
+        	<label class="control-label" for="a0">Answers</label>
+        	<div class="controls">
+            	<input type="text" name="a0" placeholder="Answer 0"><br>
+				<input type="text" name="a1" placeholder="Answer 1"><br>
+				<input type="text" name="a2" placeholder="Answer 2"><br>
+				<input type="text" name="a3" placeholder="Answer 3"><br>
+          	</div>
+        </div>
+		<div class="control-group">
+        	<label class="control-label" for="notes">Notes</label>
+        	<div class="controls">
+            	<input type="text" name="notes" placeholder="Notes">
+          	</div>
+        </div>
+		<div class="control-group">
+        	<label class="control-label" for="notes">Source Language</label>
+        	<div class="controls">
+            	<input type="text" name="src" placeholder="Source Language">
+          	</div>
+        </div>
+		<div class="control-group">
+        	<label class="control-label" for="notes">Destination Language</label>
+        	<div class="controls">
+            	<input type="text" name="dest" placeholder="Destination Language">
+          	</div>
+        </div>
+		<button class="btn btn-primary btn-lg" type="submit">submit</button>
+	</fieldset>
+</form>
+
+{% endblock %}
