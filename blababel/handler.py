@@ -29,7 +29,9 @@ class BasePage(Handler):
 
 class MainPage(Handler):
 	def get(self):
-		tvalues = {'authors': authors
+		courses = db.GqlQuery("SELECT * FROM Course").fetch(10)
+		tvalues = {'authors': authors,
+		'courses': courses
 		}
 		self.render('index.html', template_values=tvalues)
 
