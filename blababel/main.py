@@ -19,8 +19,8 @@ handlers = [('/base', BasePage),
 			('/course', CoursePage),
 			('/lesson', LessonPage),
 
-			('/chinese', ChinesePage),
-			('/lesson1cn', Lesson1Page),
+			#('/chinese', ChinesePage),
+			#('/lesson1cn', Lesson1Page),
 			
 			('/buildLesson', BuildLesson),
 			('/buildCourse', BuildCourse)

@@ -35,3 +35,12 @@ class Lesson(db.Model):
 	questions = ObjectProperty()
 	answers = ObjectProperty()
 	notes = db.StringProperty()
+
+class Entry(db.Model):
+	entry_id = db.IntegerProperty(required = True)
+	lesson_id = db.IntegerProperty(required = True)
+	difficulty = db.StringProperty(required = True)
+	imgURLs = ObjectProperty()
+	source_language = db.StringProperty(required = True)
+	destination_language = db.StringProperty(required = True)
+	notes = db.StringProperty()

@@ -31,9 +31,9 @@ class BasePage(Handler):
 
 class MainPage(Handler):
 	def get(self):
-		courses = db.GqlQuery("SELECT * FROM Course").fetch(10)
+		course_list = db.GqlQuery("SELECT * FROM Course").fetch(10)
 		tvalues = {'authors': authors,
-		'courses': courses
+					'course_list': course_list
 		}
 		self.render('index.html', template_values=tvalues)
 
@@ -102,22 +102,44 @@ class ErrorPage(Handler):
 
 
 
+
 ####################################################################
 ####################################################################
-####################################################################
+#
 #	This part needs to be modified, still working on this part 
 #
 ####################################################################
+####################################################################
+class  CoursePage(Handler):
+	def get(self):
+
+		course_info = db.GqlQuery("SELECT * FROM Course WHERE course_id=1").fetch(1)
+		tvalues = {'authors': authors,
+					'course_info': course_info
+			}
+		self.render('course.html', template_values=tvalues)
+
+
+	def post(self):
+		return 0
+
 class LessonPage(Handler):
 	def get(self):
+
+		# first do graph travesal
+		# build datastrues for the information
+		entries = db.GqlQuery("SELECT * FROM Entry WHERE lesson_id=1").fetch(1)
+
 		tvalues = {'authors': authors,
-					'entry' : entry
+					'entries' : entries
 				}
 		self.render('lesson.html', template_values=tvalues)
 	
 	def post(self):
 		return 0
 
+'''
+####################################################################
 class LessonEntry(Handler):
 	def get(self):
 		tvalues = {'authors': authors
@@ -136,9 +158,9 @@ class ChinesePage(Handler):
 	def get(self):
 		tvalues = {'authors': authors
 			}
-		self.render('chinese.html', template_values=tvalues)
+		self.render('build.html', template_values=tvalues)
 ####################################################################
-
+'''
 
 
 class BuildCourse(Handler):
@@ -192,10 +214,18 @@ class BuildLesson(Handler):
 		src = self.request.get('src')
 		dest = self.request.get('dest')
 		
-		lesson = Lesson(course_id=c_id, lesson_id=l_id, lesson_title=l_title, 
-			difficulty=difficulty, author=author, vocabulary=vocabulary, 
-			imgURLs=images, questions=q, answers=a, notes=notes, 
-			source_language=src, destination_language=dest)
+		lesson = Lesson(course_id=c_id,
+						lesson_id=l_id,
+						lesson_title=l_title, 
+						difficulty=difficulty,
+						author=author,
+						vocabulary=vocabulary, 
+						imgURLs=images,
+						questions=q,
+						answers=a,
+						notes=notes, 
+						source_language=src,
+						destination_language=dest)
 		lesson.put()
 
 		l = db.GqlQuery("SELECT * FROM Lesson WHERE lesson_id=%d" % l_id).get()
