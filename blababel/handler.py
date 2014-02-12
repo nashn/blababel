@@ -111,9 +111,14 @@ class ErrorPage(Handler):
 ####################################################################
 ####################################################################
 class  CoursePage(Handler):
-	def get(self):
+	def get(self, course_title):
 
-		course_info = db.GqlQuery("SELECT * FROM Course WHERE course_id=1").fetch(1)
+		course = Course(course_id=1, course_title='Chinese', 
+			author='a', imgURL='a', course_description='desc', 
+			source_language='src', destination_language='dest')
+		course.put()
+
+		course_info = db.GqlQuery("SELECT * FROM Course WHERE course_title=\'%s\'" % course_title).fetch(1)
 		tvalues = {'authors': authors,
 					'course_info': course_info
 			}
@@ -124,11 +129,9 @@ class  CoursePage(Handler):
 		return 0
 
 class LessonPage(Handler):
-	def get(self):
+	def get(self, lesson_id):
 
-		# first do graph travesal
-		# build datastrues for the information
-		entries = db.GqlQuery("SELECT * FROM Entry WHERE lesson_id=1").fetch(1)
+		entries = db.GqlQuery("SELECT * FROM Entry WHERE lesson_id=%d" % int(lesson_id)).fetch(1)
 
 		tvalues = {'authors': authors,
 					'entries' : entries
