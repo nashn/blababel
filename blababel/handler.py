@@ -26,7 +26,7 @@ class Handler(webapp2.RequestHandler):
     def write(self, *a, **kw):
         self.response.out.write(*a, **kw)
     
-    def render(self, template, template_values):
+    def render(self, template, template_values, **kw):
 		user = users.get_current_user()
 		template_values['user'] = user
 		# profile and info page can be created here later
@@ -70,9 +70,10 @@ class MainPage(Handler):
 		self.response.write(newUser[0].firstname)
 
 
-class LoginPage(Handler):
+class LogoutPage(Handler):
 	def get(self):
-		return 0
+		MainPage.get()
+
 
 #########################################################################
 # The following are static handlers
