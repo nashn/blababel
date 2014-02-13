@@ -6,6 +6,23 @@
 // convenience function to get the id attribute of generated sketch html element
 function getProcessingSketchId () { return 'WebGame'; }
 </script>
+
+<script type="text/javascript">
+      var bound = false;
+
+      function bindJavascript() {
+        var pjs = Processing.getInstanceById('WebGame');
+        if(pjs!=null) {
+          pjs.bindJavascript(this);
+          bound = true; }
+        if(!bound) setTimeout(bindJavascript, 250);
+      }
+      bindJavascript();
+
+      function getScore(x) {
+        document.getElementById('score').value = x;
+      }
+</script>
 {% endblock%}
 
 
@@ -41,7 +58,9 @@ function getProcessingSketchId () { return 'WebGame'; }
 
 		<div class="col-md-6">
 			<h1>This is a utility function area</h>
-			
+			<div id="coordinates">
+        		Score: <input type="textfield" id="score">/
+      		</div>
 		</div>
 	</div>
 </div>

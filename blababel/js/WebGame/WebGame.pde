@@ -28,7 +28,7 @@ int nextButtonIndex;
 
 void base()
 {
-  size(CANVAS_WIDTH, CANVAS_HEIGHT);
+  size(575, 500);
   //background
   smooth();
   strokeWeight(12);
@@ -70,7 +70,31 @@ void base()
   text("Pause", 455, 350, 80, 40);
 }
 
+interface JavaScript {
+  void getScore();
+}
+
+void bindJavascript(JavaScript js) {
+  javascript = js;
+}
+
+JavaScript javascript;
+
 void setup()
+{
+  gamePaused = false;
+  gameOver = false;
+  base();
+  buttonList = new ArrayList<Button>();
+  currentButton = new Button(srcArray[0], destArray[0], "c");
+  buttonList.add(currentButton);
+  currentButton.setCurrent();
+  nextButton = new Button(srcArray[1], destArray[1], "c");
+  buttonList.add(nextButton);
+  startTime = millis();
+}
+
+void resetup()
 {
   gamePaused = false;
   gameOver = false;
@@ -88,6 +112,11 @@ void draw()
 {
  if (gamePaused) {
   return;
+ }
+ 
+ if (GAME_SCORE == 3) {
+   winGame();
+   return;
  }
  
   if (gameOver) {
@@ -133,14 +162,14 @@ void draw()
   textAlign(LEFT);
   if(justOutOfgamePaused)
   {
-     text(Time + Float.toString(pausedTime/1000), 325, 280); 
+     text(Time + (pausedTime/1000), 325, 280); 
      justOutOfgamePaused = false;
      pausedDiff = millis() - pausedTime;
   }
   else
   {
      currentTime = millis() - startTime;
-    text(Time + Float.toString(currentTime/1000), 325, 280);
+    text(Time + (currentTime/1000), 325, 280);
   }
 }
 
@@ -161,9 +190,9 @@ void mouseClicked()
 {
   if((mouseX >= 325 && mouseX <=380)&& (mouseY >=340 && mouseY <=380))
   {
-    System.out.println("RESTART!");
+    gamePaused = !gamePaused;
     GAME_SCORE = 0;
-    setup();
+    resetup();
   }
   if(!gameOver){
   if((mouseX >= 455 && mouseX <=535)&& (mouseY >=340 && mouseY <=380))
@@ -172,6 +201,19 @@ void mouseClicked()
     justOutOfgamePaused = true;
     pausedTime = millis();
   }
+  }
+}
+
+public void winGame()
+{
+  fill(0,0,0,150);
+  rect(25,25,GAME_WIDTH,GAME_HEIGHT);
+  gamePaused = true;
+  textSize(45);
+  textAlign(CENTER);
+  text("CONGRATS", GAME_WIDTH/2 + 25, GAME_HEIGHT/2);
+  if(javascript!=null){
+    javascript.getScore(GAME_SCORE);
   }
 }
 
