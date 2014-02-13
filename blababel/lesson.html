@@ -5,6 +5,11 @@
 
 {% block content %}
 
+{% if not entries %}
+<center>
+  <h1> Author is not adding any entry yet. </h1>
+</center>
+{% else %}
 <center><a href="/game"> Start Game !</a></center>
 <br><br><br>
 
@@ -30,6 +35,6 @@
 </div>
 
 {% endfor %}
-
+{% endif %}
 
 {% endblock %}

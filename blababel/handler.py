@@ -59,7 +59,7 @@ class MainPage(Handler):
 		pp = self.request.get('passwordRe')
 		user = User(firstname=f, lastname=l, email=e, password=p)
 		user.put()
-		newUser = db.GqlQuery("SELECT * FROM User").fetch(10)
+		newUser = db.GqlQuery("SELECT * FROM User").get()
 		self.response.write(newUser[0].firstname)
 
 class BuildPage(Handler):
@@ -134,17 +134,24 @@ class ProfilePage(Handler):
 class  CoursePage(Handler):
 	def get(self, course_title):
 
-		course = Course(course_id=1, course_title='Chinese', 
-			author='a', imgURL='a', course_description='desc', 
-			source_language='src', destination_language='dest')
+		# test case:
+		course = Course(course_id=1, 
+						course_title='Chinese', 
+						author='a', 
+						source_language='src', 
+						destination_language='dest',
+						imgURL='a', 
+						course_description='desc', 
+						lessons=[0,1,2,3])
 		course.put()
 
-		course_info = db.GqlQuery("SELECT * FROM Course WHERE course_title=\'%s\'" % course_title).fetch(1)
+		course_info = db.GqlQuery("SELECT * FROM Course WHERE course_title=\'%s\'" % course_title).get()
+		
 		tvalues = {'authors': authors,
 					'course_info': course_info
 			}
 		self.render('course.html', template_values=tvalues)
-
+		
 
 	def post(self):
 		return 0
@@ -152,8 +159,7 @@ class  CoursePage(Handler):
 class LessonPage(Handler):
 	def get(self, lesson_id):
 
-		entries = db.GqlQuery("SELECT * FROM Entry WHERE lesson_id=%d" % int(lesson_id)).fetch(1)
-
+		entries = db.GqlQuery("SELECT * FROM Entry WHERE lesson_id=%d" % int(lesson_id)).get()
 		tvalues = {'authors': authors,
 					'entries' : entries
 				}
@@ -202,9 +208,14 @@ class BuildCourse(Handler):
 		src = self.request.get('src')
 		dest = self.request.get('dest')
 		
-		course = Course(course_id=c_id, course_title=c_title, 
-			author=author, imgURL=c_img, course_description=desc, 
-			source_language=src, destination_language=dest)
+		course = Course(course_id=c_id, 
+						course_title=c_title, 
+						author=author, 
+						imgURL=c_img, 
+						course_description=desc, 
+						source_language=src, 
+						destination_language=dest
+						)
 		course.put()
 
 		l = db.GqlQuery("SELECT * FROM Course WHERE course_id=%d" % c_id).get()
@@ -227,35 +238,70 @@ class BuildLesson(Handler):
 		l_title = self.request.get('lesson_title')
 		difficulty = self.request.get('diff')
 		author = self.request.get('author')
-		vocabulary = self.request.get('v').split()
-		images = self.request.get('imgs').split()
+		
+		vocabulary = self.request.get('words').split(',')
+		meanings = self.request.get('meanings').split(',')
 		q = []
 		a = []
 		for i in range(0,3):
 			q.append(self.request.get("q%s" % i))
 			a.append(self.request.get("a%s" % i))
+		images = self.request.get('imgs').split(',')
 		notes = self.request.get('notes')
 		src = self.request.get('src')
 		dest = self.request.get('dest')
+
+
+# helper function for creating entries:
+		entry_lists = buildEntry(l_id=l_id,
+									voca=vocabulary, 
+									mean=meanings, 
+									img=images, 
+									src=src, 
+									dest=dest, 
+									note='this is for testing the entry note function')
+
 		
 		lesson = Lesson(course_id=c_id,
 						lesson_id=l_id,
 						lesson_title=l_title, 
-						difficulty=difficulty,
 						author=author,
-						vocabulary=vocabulary, 
-						imgURLs=images,
+						difficulty=difficulty,
+						source_language=src,
+						destination_language=dest,
+						entries=entry_lists,
 						questions=q,
 						answers=a,
-						notes=notes, 
-						source_language=src,
-						destination_language=dest)
+						notes=notes)
 		lesson.put()
 
 		l = db.GqlQuery("SELECT * FROM Lesson WHERE lesson_id=%d" % l_id).get()
 		s = "Success! Here is the entry:\n"
 		s += "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" % (l.course_id,
-			l.lesson_id, l.lesson_title, l.difficulty, l.author, 
-			l.vocabulary, l.imgURLs, l.questions, l.answers,
-			l.notes, l.source_language, l.destination_language)
+			l.lesson_id, 
+			l.lesson_title, 
+			l.author, 
+			l.difficulty, 
+			l.source_language, 
+			l.destination_language,
+			l.entries,
+			l.questions, 
+			l.answers,
+			l.notes)
 		self.response.write(s)
+
+
+	def buildEntry(l_id, voca, means, img, src, dest, note):
+		entry_id = []
+		for i in range(0, len(voca)-1):
+			entry_id.append(i)
+			entry = Entry(entry_id = i,
+						lesson_id = l_id,
+						imgURLs = img[i],
+						word = voca[i],
+						mean = means[i],
+						source_language = src,
+						destination_language = dest,
+						notes = note)
+			entry.put()
+		return entry_id
