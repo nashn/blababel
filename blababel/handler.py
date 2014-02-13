@@ -10,6 +10,8 @@ from google.appengine.api import users
 from google.appengine.ext import db
 
 from schema import *
+#this is for data loading
+#import dataloader
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -46,6 +48,8 @@ class BasePage(Handler):
 
 class MainPage(Handler):
 	def get(self):
+		#this is for data loading
+		#dataloader.load()
 		course_list = db.GqlQuery("SELECT * FROM Course").fetch(10)
 		tvalues = {'authors': authors,
 					'course_list': course_list
