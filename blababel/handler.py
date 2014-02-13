@@ -50,7 +50,20 @@ class MainPage(Handler):
 	def get(self):
 		#this is for data loading
 		#dataloader.load()
-		course_list = db.GqlQuery("SELECT * FROM Course").fetch(10)
+		desc = '''&nbsp&nbsp&nbsp Official language of the People's Republic of China, Taiwan, and Singapore.About one-fifth of the world's population, or over one billion people, speaks some form of Chinese as their first language.'''
+
+		course = Course(course_id=1, 
+						course_title='Chinese', 
+						author='admin', 
+						source_language='Chinese', 
+						destination_language='English',
+						imgURL='\"/img/course/chinese.jpg\"', 
+						course_description=desc, 
+						lessons=[1,2,3])
+		course.put()
+
+		course_list = db.GqlQuery("SELECT * FROM Course").fetch(1)
+
 		tvalues = {'authors': authors,
 					'course_list': course_list
 		}
@@ -137,23 +150,9 @@ class ProfilePage(Handler):
 ####################################################################
 ####################################################################
 class  CoursePage(Handler):
-	def get(self, course_title):
+	def get(self, course_id):
+		course_info = db.GqlQuery("SELECT * FROM Course WHERE course_id=%d" % int(course_id)).get()
 
-		'''
-		# test case:
-		course = Course(course_id=1, 
-						course_title='Chinese', 
-						author='a', 
-						source_language='src', 
-						destination_language='dest',
-						imgURL='a', 
-						course_description='desc', 
-						lessons=[0,1,2,3])
-		course.put()
-		'''
-
-		course_info = db.GqlQuery("SELECT * FROM Course WHERE course_title=\'%s\'" % course_title).get()
-		
 		tvalues = {'authors': authors,
 					'course_info': course_info
 			}
@@ -166,7 +165,7 @@ class  CoursePage(Handler):
 class LessonPage(Handler):
 	def get(self, lesson_id):
 
-		entries = db.GqlQuery("SELECT * FROM Entry WHERE lesson_id=%d" % int(lesson_id)).get()
+		entries = db.GqlQuery("SELECT * FROM Entry WHERE lesson_id=%d" % int(lesson_id)).fetch(1000)
 		tvalues = {'authors': authors,
 					'entries' : entries
 				}
