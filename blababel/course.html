@@ -2,17 +2,23 @@
 {% block title %}This is the Course page{% endblock %}
 
 {% block content %}
+<!--
   <center><a href="/game"> Start Game !</a></center>
   <br><br><br>
+-->
 
 <div>
 
   <div class="col-sm-3 col-md-3" style="float:left; width:400px;">
     <div class="thumbnail">
-      <img src="img/chinese.jpg" alt="...">
+      <img src="{{ course_info.imgURL }}" alt="...">
       <div class="caption">
+      	<!--
         <h3 style="text-align:left;">&nbsp&nbsp&nbsp Official language of the People's Republic of China, Taiwan, and Singapore.About one-fifth of the world's population, or over one billion people, speaks some form of Chinese as their first language.</h3>
+		-->
+		<h3>{{ course_info.course_description }}</h3>
   
+
      <form>
 <span style="display:inline-block; width: 120px;"></span>
 	<button type="button" class="btn btn-primary">  Now</button>
@@ -27,9 +33,13 @@
     <h3 class="panel-title"><strong>Beginner</strong></h3>
   </div>
   <div class="panel-body">
-  	{% for lesson in lesson_list %}
-	    <div><a href="/lesson" >Lesson 1</a></div>
+
+	<div><a href="/lesson-1" >Lesson 1</a></div>
+
+  	{% for id in course_info.lessons %}
+	    <div><a href="/lesson-{{ id }}" >Lesson {{ id }}</a></div>
   	{% endfor %}
+
   </div>
 </div>
 

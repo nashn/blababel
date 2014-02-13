@@ -1,28 +1,28 @@
 {% extends "base.html" %}
-{% block title %} {{ lesson.name }} Lesson {{ lesson.id }} {% endblock %}
+{# {% block title %} {{ name }} Lesson {{ lesson.id }} {% endblock %} #}
+
+{% block title %} Lesson {% endblock %}
 
 {% block content %}
 
 <center><a href="/game"> Start Game !</a></center>
 <br><br><br>
 
-{% for e in lesson.entry %}
+{% for e in entries %}
 <div>
 
   <div class="col-sm-3 col-md-3" style="float:left; width:300px;">
     <div class="thumbnail">
 
-      <img src='img/chinese.jpg' alt="...">
+      <img src=' {{ e.imageURL }} ' alt="...">
       <div class="caption">
-	{{ e.english }}
-	{{ e.english }}
-	{{ e.chinese }}
-	{{ e.imageURL }}
+	{{ e.sourse_language }}
+	{{ e.destination_language }}
         <h3 style="text-align:left;"> {{ e.notes }} </h>
   
      <form>
 <span style="display:inline-block; width: 120px;"></span>
-	<button type="button" class="btn btn-primary">Boy</button>
+<!--	<button type="button" class="btn btn-primary">Boy</button> -->
 	</form>
 
     </div>
