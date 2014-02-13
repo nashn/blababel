@@ -119,7 +119,7 @@ class Button
     textAlign(CENTER);
    
     fill(255,255,255);
-    text(srcLang, x + COLUMN_2X, y + BOX_HEIGHT, BOX_WIDTH, BOX_HEIGHT/2);
+    text(srcLang, x + COLUMN_2X, y + BOX_HEIGHT + 5, BOX_WIDTH, BOX_HEIGHT/2);
   }
   
   public void display(Button b)
@@ -131,7 +131,7 @@ class Button
     textAlign(CENTER);
    
     fill(255,255,255);
-    text(b.srcLang, 390, 70, 90, 40);
+    text(b.srcLang, 390, 80, 90, 40);
   }
  
 }

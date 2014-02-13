@@ -21,10 +21,10 @@ handlers:
 #- url: /lessons
 #  static_dir: lessons
 
-'''
-- url: /_ah/login_required
-  script: do_opened_login.app
-'''
+
+# - url: /_ah/login_required
+#   script: do_opened_login.app
+
 
 - url: /.*
   script: main.application
