@@ -4,7 +4,9 @@
 import os
 import webapp2
 import jinja2
+
 from classes.ObjectProperty import ObjectProperty
+from google.appengine.api import users
 from google.appengine.ext import db
 
 from schema import *
@@ -22,8 +24,20 @@ class Handler(webapp2.RequestHandler):
         self.response.out.write(*a, **kw)
     
     def render(self, template, template_values):
-    	t = JINJA_ENVIRONMENT.get_template(template)
-        self.write(t.render(template_values))
+		user = users.get_current_user()
+		template_values['user'] = user
+		# profile and info page can be created here later
+		t = JINJA_ENVIRONMENT.get_template(template)
+
+		if not user:
+			sign_up = False
+			log_in = True
+			public_template_values = template_values
+			public_template_values['sign_up'] = sign_up
+			self.write(t.render(public_template_values))
+		else:
+			self.write(t.render(template_values))
+
 
 class BasePage(Handler):
 	def get(self):
@@ -101,7 +115,14 @@ class ErrorPage(Handler):
 		self.render('404.html', template_values=tvalues)
 
 
-
+class ProfilePage(Handler):
+	def get(self):
+		tvalues = {'authors': authors,
+					'teststring' : 'Hello World'
+					}
+		self.render('profile.html', template_values=tvalues)
+	def post(self):
+		return 0
 
 ####################################################################
 ####################################################################
