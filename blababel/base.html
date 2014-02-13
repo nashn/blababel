@@ -42,7 +42,7 @@
             
             {% for course in course_list %}
               <li>
-                <a href="/course-{{ course.course_id }}"> {{ course.tilte }}</a>
+                <a href="/course-{{ course.course_id }}"> {{ course.course_title }}</a>
 
               </li>
             {% endfor %}
@@ -104,7 +104,7 @@
     <center>
     <p>&copy; 2014 <a href="/" style="text-decoration: none">Blababel</a>, Powered By <a href="https://developers.google.com/appengine" style="text-decoration: none">GAE</a> and <a href="http://getbootstrap.com/" style="text-decoration: none">Bootstrap</a>,  Designed by 
     	{% for name, addr in authors %}
-    	 <a href="{{ addr }}"> {{ name }} </a>
+    	 <a href="{{ addr }}" style="text-decoration: none"> {{ name }} </a>
     	{% endfor %}
     </p>
     </center>
