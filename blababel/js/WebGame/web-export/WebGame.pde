@@ -71,7 +71,7 @@ void base()
 }
 
 interface JavaScript {
-  void getScore();
+  void getScore(int i);
 }
 
 void bindJavascript(JavaScript js) {
@@ -342,8 +342,9 @@ class Button
     
     fill(0,0,0);
     rect(x + COLUMN_2X, y + BOX_HEIGHT, 70, 30);
+    
     textSize(12);
-    textAlign(CENTER, CENTER);
+    textAlign(CENTER);
    
     fill(255,255,255);
     text(srcLang, x + COLUMN_2X, y + BOX_HEIGHT, BOX_WIDTH, BOX_HEIGHT/2);
@@ -353,8 +354,9 @@ class Button
   {
     fill(0, 0, 0);
     rect(390,70, 90, 40);
+    
     textSize(12);
-    textAlign(CENTER, CENTER);
+    textAlign(CENTER);
    
     fill(255,255,255);
     text(b.srcLang, 390, 70, 90, 40);

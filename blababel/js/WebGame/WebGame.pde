@@ -71,7 +71,7 @@ void base()
 }
 
 interface JavaScript {
-  void getScore();
+  void getScore(int i);
 }
 
 void bindJavascript(JavaScript js) {
