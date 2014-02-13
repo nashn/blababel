@@ -50,19 +50,8 @@ class MainPage(Handler):
 	def get(self):
 		#this is for data loading
 		#dataloader.load()
-		desc = '''&nbsp&nbsp&nbsp Official language of the People's Republic of China, Taiwan, and Singapore.About one-fifth of the world's population, or over one billion people, speaks some form of Chinese as their first language.'''
 
-		course = Course(course_id=1, 
-						course_title='Chinese', 
-						author='admin', 
-						source_language='Chinese', 
-						destination_language='English',
-						imgURL='\"/img/course/chinese.jpg\"', 
-						course_description=desc, 
-						lessons=[1,2,3])
-		course.put()
-
-		course_list = db.GqlQuery("SELECT * FROM Course").fetch(1)
+		course_list = db.GqlQuery("SELECT * FROM Course").fetch(1000)
 
 		tvalues = {'authors': authors,
 					'course_list': course_list
@@ -217,11 +206,11 @@ class BuildCourse(Handler):
 		course = Course(course_id=c_id, 
 						course_title=c_title, 
 						author=author, 
+						source_language=src, 
+						destination_language=dest,
 						imgURL=c_img, 
 						course_description=desc, 
-						source_language=src, 
-						destination_language=dest
-						)
+						lessons=[1,2,3,4,5])
 		course.put()
 
 		l = db.GqlQuery("SELECT * FROM Course WHERE course_id=%d" % c_id).get()
