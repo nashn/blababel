@@ -17,7 +17,8 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True
     )
 
-authors = ['Chia-Hao Chen', 'She Nie', 'Greg Jeckell']
+authors = [('Chia-Hao Chen', 'https://github.com/chiahc1'), ('She Nie', 'https://github.com/nashn'), ('Greg Jeckell', 'http://www.gregjeckell.com/')]
+
 
 class Handler(webapp2.RequestHandler):
     def write(self, *a, **kw):
@@ -134,6 +135,7 @@ class ProfilePage(Handler):
 class  CoursePage(Handler):
 	def get(self, course_title):
 
+		'''
 		# test case:
 		course = Course(course_id=1, 
 						course_title='Chinese', 
@@ -144,6 +146,7 @@ class  CoursePage(Handler):
 						course_description='desc', 
 						lessons=[0,1,2,3])
 		course.put()
+		'''
 
 		course_info = db.GqlQuery("SELECT * FROM Course WHERE course_title=\'%s\'" % course_title).get()
 		
