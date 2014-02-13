@@ -69,6 +69,14 @@ class MainPage(Handler):
 		newUser = db.GqlQuery("SELECT * FROM User").get()
 		self.response.write(newUser[0].firstname)
 
+
+class LoginPage(Handler):
+	def get(self):
+		return 0
+
+#########################################################################
+# The following are static handlers
+#########################################################################
 class BuildPage(Handler):
 	def get(self):
 		tvalues = {'authors': authors,
