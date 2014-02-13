@@ -16,7 +16,7 @@ handlers = [('/base', BasePage),
 			('/donation', DonationPage),
 			('/game', GamePage),
 			('/profile', ProfilePage),
-			
+
 			#the following is lessons, later
 			(r'/course-([^/-]+)', CoursePage),
 			(r'/lesson-([^/-]+)', LessonPage),
