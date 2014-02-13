@@ -21,6 +21,7 @@ class Course(db.Model):
 	destination_language = db.StringProperty(required = True)
 	imgURL = db.StringProperty(required = True)
 	course_description = db.StringProperty()
+	lessons = ObjectProperty()
 
 class Lesson(db.Model):
 	course_id = db.IntegerProperty(required = True)
@@ -28,10 +29,9 @@ class Lesson(db.Model):
 	lesson_title = db.StringProperty(required = True)
 	author = db.StringProperty(required = True)
 	difficulty = db.StringProperty(required = True)
-	vocabulary = ObjectProperty()
-	imgURLs = ObjectProperty()
 	source_language = db.StringProperty(required = True)
 	destination_language = db.StringProperty(required = True)
+	entries = ObjectProperty()
 	questions = ObjectProperty()
 	answers = ObjectProperty()
 	notes = db.StringProperty()
@@ -39,8 +39,9 @@ class Lesson(db.Model):
 class Entry(db.Model):
 	entry_id = db.IntegerProperty(required = True)
 	lesson_id = db.IntegerProperty(required = True)
-	difficulty = db.StringProperty(required = True)
 	imgURLs = ObjectProperty()
+	word = db.StringProperty(required=True)
+	mean = db.StringProperty(required=True)
 	source_language = db.StringProperty(required = True)
 	destination_language = db.StringProperty(required = True)
 	notes = db.StringProperty()

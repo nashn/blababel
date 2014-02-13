@@ -7,6 +7,11 @@
   <br><br><br>
 -->
 
+{% if course_info %}
+<center>
+	<h1> Author is not adding any course info yet. </h1>
+</center>
+{% else %}
 <div>
 
   <div class="col-sm-3 col-md-3" style="float:left; width:400px;">
@@ -21,7 +26,7 @@
 
      <form>
 <span style="display:inline-block; width: 120px;"></span>
-	<button type="button" class="btn btn-primary">  Now</button>
+	<button type="button" class="btn btn-primary"> Got it! </button>
 	</form>
 
     </div>
@@ -33,9 +38,9 @@
     <h3 class="panel-title"><strong>Beginner</strong></h3>
   </div>
   <div class="panel-body">
-
+  	<!--
 	<div><a href="/lesson-1" >Lesson 1</a></div>
-
+	-->
   	{% for id in course_info.lessons %}
 	    <div><a href="/lesson-{{ id }}" >Lesson {{ id }}</a></div>
   	{% endfor %}
@@ -63,4 +68,6 @@
   </div>
 </div>
 </div>
+
+{% endif %}
 {% endblock %}

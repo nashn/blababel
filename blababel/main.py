@@ -15,12 +15,11 @@ handlers = [('/base', BasePage),
 			('/about', AboutPage),
 			('/donation', DonationPage),
 			('/game', GamePage),
+			('/profile', ProfilePage),
+			
 			#the following is lessons, later
 			(r'/course-([^/-]+)', CoursePage),
 			(r'/lesson-([^/-]+)', LessonPage),
-
-			#('/chinese', ChinesePage),
-			#('/lesson1cn', Lesson1Page),
 			
 			('/buildLesson', BuildLesson),
 			('/buildCourse', BuildCourse)
