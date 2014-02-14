@@ -14,18 +14,18 @@
 <center><a href="/game"> Start Game !</a></center>
 <br><br><br>
 
+<div>
+  <h3 style="text-align:left;"> {{ entries[0].notes }} </h>
+</div>
 {% for e in entries %}
 <div>
-
   <div class="col-sm-3 col-md-3" style="float:left; width:300px;">
     <div class="thumbnail">
 
-      <img src=' {{ e.imageURL }} ' alt="...">
+      <img src=' {{ e.imgURLs }} ' alt="...">
       <div class="caption">
-	{{ e.sourse_language }}
-	{{ e.destination_language }}
-        <h3 style="text-align:left;"> {{ e.notes }} </h>
-  
+	<a>{{ e.word }}</a>
+	<a>{{ e.mean }}</a>
      <form>
 <span style="display:inline-block; width: 120px;"></span>
 <!--	<button type="button" class="btn btn-primary">Boy</button> -->
