@@ -1,9 +1,47 @@
 {% extends "base.html" %}
 {% block title %}This is the main page{% endblock %}
 {% block content %}
-<div class="container-fluid">
 
-	<h1>This is for user porfile</h1>
+<div class="container-fluid"
+
 	
-</div>
+<ul class="list-group" style="width: 500px;">
+  <li class="list-group-item">Chinese
+	<div class="progress progress-striped active">
+  		<div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+    			<span class="sr-only">45% Complete</span>
+  		</div>
+	 </div>
+	
+  </li>
+  <li class="list-group-item">Dapibus ac facilisis in
+       <div class="row">
+          <div class="col-lg-12">
+            <h2>morris.js Charts</h2>
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Scores</h3>
+              </div>
+              <div class="panel-body">
+                <div id="morris-chart-area"></div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /.row -->
+
+<ul>
+
+
+
+    <!-- JavaScript -->
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/bootstrap.js"></script>
+
+    <!-- Page Specific Plugins -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
+    <script src="js/morris/chart-data-morris.js"></script>
+    <script src="js/tablesorter/jquery.tablesorter.js"></script>
+    <script src="js/tablesorter/tables.js"></script>
+
 {% endblock %}
