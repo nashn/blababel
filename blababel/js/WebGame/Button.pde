@@ -1,22 +1,13 @@
-/*
-**This class creates a button object
-**A button object contains the vocab and its translation
-*/
 class Button
-{
-  static final int COLUMN_2X = 94;
-  static final int BOX_WIDTH = 69;
-  static final int BOX_HEIGHT = 44;
-  static final int BOUNDARY_LEFT = 25;
-  static final int BOUNDARY_RIGHT = 301;
-  static final int BOUNDARY_TOP = 25;
+{ 
+  String srcLang;
+  String destLang;
+  String spelling;
+  boolean active;
   
-  private String srcLang;
-  private String destLang;
-  private String spelling;
-  private float y = 0;
-  private float x = 0;
-  private boolean active;
+  int px, py, boxWidth, boxHeight;
+  color boxColor;
+  color textColor;
   
   public Button(String srcLang, String tranLang, String spelling)
   {
@@ -25,113 +16,77 @@ class Button
     this.spelling = spelling;
     currentButtonIsFinished = false;
     this.active = true;
-    x = -100;
-    y = -100;
-  }
-  public Button()
-  {
-    rect(400,70, 70, 30);
+    px = -100;
+    py = -100;
+    boxWidth = 79;
+    boxHeight = 48;
+    boxColor = color(0,0,0);
+    textColor = color(255,255,255);
   }
   
   public void setCurrent()
   {
-    x = 0;
-    y = -20;
-    //rect(COLUMN_2X, 40, BOX_WIDTH, BOX_HEIGHT);
+    px = 80;
+    py = -20;
   }
   
-  public float currentX()
+  public boolean isColliding(Button o)
   {
-    return COLUMN_2X + x;
-  }
-  public float currentY()
-  {
-    return BOX_HEIGHT + y;
-  }
-  public String getSrc()
-  {
-    return srcLang;
-  }
-  public String getTran()
-  {
-    return destLang;
-  }
-  public String getSpell()
-  {
-    return spelling;
-  }
-  
-  public boolean isColliding(Button b) 
-  {
-   if ((this.currentY() <= b.currentY()+BOX_HEIGHT-5) && (this.currentX() == b.currentX())) {
-     if (this.srcLang.equals(b.destLang)) {
-       this.active = false;
-       b.active = false;
-       GAME_SCORE++;
-     }
-     if (b.currentY() <= BOUNDARY_TOP+10) {
-       gameOver = true;
-     }
-     return true;
-   }
-   return false;
+    if (!(this.px > o.px+o.boxWidth || this.px+this.boxWidth < o.px 
+      || this.py > o.py+o.boxHeight || this.py+this.boxHeight < o.py)) {
+      if ((this.srcLang.equals(o.destLang)) && (this.py > o.py)) {
+        this.active = false;
+        o.active = false;
+        GAME_SCORE++;
+        scoreIncrease();
+      }
+      if (this.py <= 10) {
+        gameOver = true;
+      }
+      return true;
+    }
+    return false;
   }
   
   public void move()
   {
-    if(y >= 387)
-    {
+    if(py >= height-boxHeight) {
       currentButtonIsFinished = true;
-       return;
+      return;
     }
-      y = y + 10;
+    py = py + 5;
   }
-  public void move(int num)
-    {
-    if(y >= 387)
-    {
+  
+  public void moveY(int num)
+  {
+    if(py >= height-boxHeight) {
       currentButtonIsFinished = true;
-       return;
+      return;
     }
-      y = y + 1;
-    }
+    py = this.py + 1;
+  }
+  
   public void moveX(int num)
   {
-    if (this.currentX()+num <= BOUNDARY_LEFT) {
-      x = -62;
+    int temp = px + num;
+    if (temp < 0 || temp >= width) {
       return;
     }
-    if (this.currentX()+num+BOX_WIDTH-1 >= BOUNDARY_RIGHT) {
-      x = 2 * BOX_WIDTH - 2;
-      return;
-    }
-    x += num;
+    px += num;
   }
+  
   public void display()
   {
     if (!active)
       return;
     
-    fill(0,0,0);
-    rect(x + COLUMN_2X, y + BOX_HEIGHT, 70, 30);
+    fill(boxColor);
+    noStroke();
+    rect(px, py, boxWidth, boxHeight);
     
     textSize(12);
     textAlign(CENTER);
-   
-    fill(255,255,255);
-    text(srcLang, x + COLUMN_2X, y + BOX_HEIGHT + 5, BOX_WIDTH, BOX_HEIGHT/2);
+    fill(textColor);
+    text(srcLang, px, py+10, boxWidth, boxHeight);
   }
-  
-  public void display(Button b)
-  {
-    fill(0, 0, 0);
-    rect(390,70, 90, 40);
-    
-    textSize(12);
-    textAlign(CENTER);
-   
-    fill(255,255,255);
-    text(b.srcLang, 390, 80, 90, 40);
-  }
- 
 }

@@ -20,7 +20,31 @@ function getProcessingSketchId () { return 'WebGame'; }
       bindJavascript();
 
       function getScore(x) {
-        document.getElementById('score').value = x;
+        document.getElementById('WebGame-score').innerHTML = x;
+      }
+
+      function btnLeft() {
+      	var pjs = Processing.getInstanceById('WebGame');
+      	pjs.btnLeft();
+      }
+
+      function btnRight() {
+      	var pjs = Processing.getInstanceById('WebGame');
+      	pjs.btnRight();
+      }
+
+      function pause() {
+      	var pjs = Processing.getInstanceById('WebGame');
+      	pjs.pause();
+      }
+
+      function restart() {
+      	var pjs = Processing.getInstanceById('WebGame');
+      	pjs.restart();
+      }
+
+      function getEndGameResult(b) {
+      	
       }
 </script>
 {% endblock%}
@@ -28,26 +52,24 @@ function getProcessingSketchId () { return 'WebGame'; }
 
 {% block content %}
 <center><a href="/"> Return Main </a></center>
-<br><br><br>
-
 <div class="container-fluid">
 
 	<div class="row-fluid">
-		<div class="col-md-4 col-md-offset-2">
+		<div class="col-md-6">
 			<div>
-			<div>
-				<canvas id="WebGame" data-processing-sources="js/WebGame/web-export/WebGame.pde" 
-						width="575" height="500">
+				<h3>Score: <h3 id="WebGame-score"></h3></h3>
+				<button onclick="pause()">Pause</button>
+				<button onclick="restart()">Restart</button>
+				<canvas id="WebGame" data-processing-sources="js/WebGame/web-export/WebGame.pde"
+						width="320" height="480">
 					<p>Your browser does not support the canvas tag.</p>
-					<!-- Note: you can put any alternative content here. -->
 				</canvas>
 				<noscript>
 					<p>JavaScript is required to view the contents of this page.</p>
 				</noscript>
-
 			<!--
 			<h1>WebGame</h1>
-    		<p id="description"></p>
+			<p id="description"></p>
 			<p id="sources">Source code: <a href="js/WebGame.pde">WebGame</a> </p>
 			<p>
 			Built with <a href="http://processing.org" title="Processing">Processing</a>
@@ -56,13 +78,9 @@ function getProcessingSketchId () { return 'WebGame'; }
 			-->
 	    	</div>
 		</div>
-		</div>
 
 		<div class="col-md-6">
 			<h1>This is a utility function area</h>
-			<div id="coordinates">
-        		Score: <input type="textfield" id="score">/
-      		</div>
 		</div>
 	</div>
 </div>
