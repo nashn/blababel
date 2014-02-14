@@ -67,15 +67,12 @@ function getProcessingSketchId () { return 'WebGame'; }
 
 
 {% block content %}
-<center><a href="/"> Return Main </a></center>
-<div class="container-fluid">
-
 	<div class="row-fluid">
 		<div class="col-md-6">
 			<div>
 				<h3>Score: <h3 id="WebGame-score"></h3></h3>
 				<button onclick="pause()">Pause</button>
-				<button onclick="setSourceStringArray(a)">Restart</button>
+				<button onclick="restart()">Restart</button>
 				<canvas id="WebGame" data-processing-sources="js/WebGame/web-export/WebGame.pde"
 						width="320" height="480">
 					<p>Your browser does not support the canvas tag.</p>
@@ -92,12 +89,10 @@ function getProcessingSketchId () { return 'WebGame'; }
 			and <a href="http://processingjs.org" title="Processing.js">Processing.js</a>
 			</p>
 			-->
-	    	</div>
+	    </div>
 		</div>
 
 		<div class="col-md-6">
 			<h1>This is a utility function area</h>
 		</div>
-	</div>
-</div>
 {% endblock %}

@@ -68,7 +68,7 @@
  </div>
 </nav>
 {% endblock %}
-
+<div class="container-fluid" id="wrap">
 {% block user_profile %}
 <!--
 <center>
@@ -96,11 +96,9 @@
 {% block content %}
 
 {% endblock %}
-
+  </div> <!-- end container-fluid -->
 {% block footer %}
-
-<div id="footer">
-  <div class="container-fluid">
+  <div id="footer">
     <center>
       <p>&copy; 2014 <a href="/" style="text-decoration: none">BlaBabel</a>, Powered By <a href="https://developers.google.com/appengine" style="text-decoration: none">GAE</a> and <a href="http://getbootstrap.com/" style="text-decoration: none">Bootstrap</a>,  Designed by 
       {% for name, addr in authors %}
@@ -109,7 +107,6 @@
       </p>
     </center>
   </div>
-</div>
 {% endblock %}
 
 

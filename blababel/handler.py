@@ -76,9 +76,7 @@ class Handler(webapp2.RequestHandler):
 		template_values['logout'] = logout
 		template_values['uProfile'] = uProfile
 		
-		#if user:
-		#	self.write(JINJA_ENVIRONMENT.get_template('profile.html').render(template_values))
-		#else:
+	
 		self.write(t.render(template_values))
 
 
@@ -106,8 +104,8 @@ class MainPage(Handler):
 		pp = self.request.get('passwordRe')
 		user = User(firstname=f, lastname=l, email=e, password=p)
 		user.put()
-		newUser = db.GqlQuery("SELECT * FROM User").get()
-		self.response.write(newUser[0].firstname)
+		newUser = db.GqlQuery("SELECT * FROM User WHERE email=\'%s\'" % e).get()
+		self.response.write('Added new user: '+ newUser.firstname)
 
 
 '''
@@ -234,15 +232,14 @@ class BuildCourse(Handler):
 		src = self.request.get('src')
 		dest = self.request.get('dest')
 		
-		course = Course(key_name=str(c_id),
-						course_id=c_id, 
+		course = Course(course_id=c_id, 
 						course_title=c_title, 
 						author=author, 
 						source_language=src, 
 						destination_language=dest,
 						imgURL=c_img, 
 						course_description=desc, 
-						lessons=[])
+						lessons=[1,2,3,4,5])
 		course.put()
 
 		print 'good till this point'
@@ -311,12 +308,6 @@ class BuildLesson(Handler):
 						answers=a,
 						notes=notes)
 		lesson.put()
-
-		course = db.GqlQuery("SELECT * FROM Course WHERE course_id=%d" % c_id).get()
-		lessonList = course.lessons
-		lessonList.append(l_id)
-		course.lessons = lessonList
-		course.put()
 
 		l = db.GqlQuery("SELECT * FROM Lesson WHERE lesson_id=%d" % l_id).get()
 		s = "Success! Here is the entry:\n"
