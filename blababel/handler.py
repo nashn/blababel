@@ -298,8 +298,6 @@ class BuildLesson(Handler):
 		for i in e:
 			i.put()
 
-
-
 		lesson = Lesson(key_name=str(l_id),
 						course_id=c_id,
 						lesson_id=l_id,
