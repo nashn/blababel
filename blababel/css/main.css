@@ -3,6 +3,8 @@ body {
 	background-image: url('imgs/noise.png');
 }
 
+.container-fluid { margin-top: 85px; }
+
 .jumbotron { background-color: transparent; }
 
 #footer { 
