@@ -30,7 +30,8 @@
 			</fieldset>
 		</form>
 		</div>
-		{% elif log_in %}
+		<!--
+		{# elif log_in #}
 		<div class="col-md-6">
 		<form method="post">
 			<fieldset>
@@ -41,9 +42,10 @@
 			</fieldset>
 		</form>
 		</div>
+		-->
 		{% else %}
 		<div>
-			<p>No specific action</p>
+			<a href="/profile">Check my Profile</a>
 		</div>
 		{% endif %}
 

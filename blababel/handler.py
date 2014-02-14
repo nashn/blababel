@@ -9,6 +9,8 @@ from classes.ObjectProperty import ObjectProperty
 from google.appengine.api import users
 from google.appengine.ext import db
 
+from google.appengine.ext.webapp.util import run_wsgi_app
+
 from schema import *
 #this is for data loading
 #import dataloader
@@ -19,6 +21,15 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True
     )
 
+providers = {
+    'Google'   : 'https://www.google.com/accounts/o8/id',
+    'Yahoo'    : 'yahoo.com',
+    'MySpace'  : 'myspace.com',
+    'AOL'      : 'aol.com',
+    'MyOpenID' : 'myopenid.com'
+    # add more here
+}
+
 authors = [('Chia-Hao Chen', 'https://github.com/chiahc1'), ('She Nie', 'https://github.com/nashn'), ('Greg Jeckell', 'http://www.gregjeckell.com/')]
 
 
@@ -27,25 +38,35 @@ class Handler(webapp2.RequestHandler):
         self.response.out.write(*a, **kw)
     
     def render(self, template, template_values, **kw):
-		user = users.get_current_user()
-		template_values['user'] = user
-		# profile and info page can be created here later
 		t = JINJA_ENVIRONMENT.get_template(template)
+		
+		log_in = False
+		sign_up = True
+		
+		user = users.get_current_user()
+		if user:# signed in already
+			log_in = True
+			sign_up = False
+			self.response.out.write('Hello <em>%s</em>! [<a href="%s">sign out</a>]' % (
+				user.nickname(), users.create_logout_url(self.request.uri)))
+		else:# let user choose authenticator
+			self.response.out.write('Hello world! Sign in at: ')
+			for name, uri in providers.items():
+				self.response.out.write('[<a href="%s">%s</a>]' % (
+					users.create_login_url(federated_identity=uri), name))
+
 		course_list = db.GqlQuery("SELECT * FROM Course").fetch(1000)
 		template_values = {'authors': authors,
-					'course_list': course_list
+					'course_list': course_list,
+					'user' : user,
+					'log_in': log_in,
+					'sign_up': sign_up
 			}
 
-		if not user:
-			sign_up = False
-			log_in = True
-			public_template_values = template_values
-			public_template_values['sign_up'] = sign_up
-			self.write(t.render(public_template_values))
-		else:
-			self.write(t.render(template_values))
+		self.write(t.render(template_values))
 
 
+# this handler is just for test:
 class BasePage(Handler):
 	def get(self):
 		self.render('base.html')
