@@ -21,19 +21,16 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True
     )
 
-providers = {
-    'Google'   : 'https://www.google.com/accounts/o8/id',
-    'Yahoo'    : 'yahoo.com',
-    'MySpace'  : 'myspace.com',
-    'AOL'      : 'aol.com',
-    'MyOpenID' : 'myopenid.com'
+providers = [('Google', 'https://www.google.com/accounts/o8/id'),
+			('Yahoo', 'yahoo.com')
     # add more here
-}
+]
 
 authors = [('Chia-Hao Chen', 'https://github.com/chiahc1'), ('She Nie', 'https://github.com/nashn'), ('Greg Jeckell', 'http://www.gregjeckell.com/')]
 
 
 class Handler(webapp2.RequestHandler):
+	
     def write(self, *a, **kw):
         self.response.out.write(*a, **kw)
     
@@ -44,35 +41,46 @@ class Handler(webapp2.RequestHandler):
 		sign_up = True
 		
 		user = users.get_current_user()
+		login = [('/', 'BlaBabel')]
 		logout = users.create_logout_url(self.request.uri)
+		uProfile = None
 		
 		if user:# signed in already
 			log_in = True
 			sign_up = False
+
+			uProfile = db.GqlQuery("SELECT * FROM UserProfile WHERE uid=1").get()
+			if not uProfile:
+				u = UserProfile(uid=1, username=user.nickname(), courses=[0,1], scores=[('lesson1',100)])
+				u.put()
+			uProfile = db.GqlQuery("SELECT * FROM UserProfile WHERE uid=1").get()
+			
 			#self.response.out.write('Hello <em>%s</em>! [<a href="%s">sign out</a>]' % (
 			#	user.nickname(), users.create_logout_url(self.request.uri)))
 		if not user:# let user choose authenticator
-			self.response.out.write('Hello world! Sign in at: ')
-			for name, uri in providers.items():
-				self.response.out.write('[<a href="%s">%s</a>]' % (
-					users.create_login_url(federated_identity=uri), name))
+			for name, uri in providers:
+				login.append(tuple([users.create_login_url(federated_identity=uri), name]))
 
 		course_list = db.GqlQuery("SELECT * FROM Course").fetch(1000)
-		template_values = {'authors': authors,
-					'course_list': course_list,
-					'user' : user,
-					'log_in': log_in,
-					'sign_up': sign_up,
-					'logout' : logout
-			}
 
+		# change to dictionary
+		template_values['authors'] = authors
+		template_values['course_list'] = course_list
+		template_values['user'] = user
+		template_values['log_in'] = log_in
+		template_values['sign_up'] = sign_up
+		template_values['login'] = login
+		template_values['logout'] = logout
+		template_values['uProfile'] = uProfile
+		
 		self.write(t.render(template_values))
 
 
 # this handler is just for test:
-class BasePage(Handler):
-	def get(self):
-		self.render('base.html')
+class BasePage(webapp2.RequestHandler):
+	def baseRender(self, template, template_values):
+		t = JINJA_ENVIRONMENT.get_template(template)
+		self.write(t.render(template_values))
 
 class MainPage(Handler):
 	def get(self):
@@ -184,10 +192,7 @@ class ProfilePage(Handler):
 class  CoursePage(Handler):
 	def get(self, course_id):
 		course_info = db.GqlQuery("SELECT * FROM Course WHERE course_id=%d" % int(course_id)).get()
-
-		tvalues = {'authors': authors,
-					'course_info': course_info
-			}
+		tvalues = {'course_info' : course_info}
 		self.render('course.html', template_values=tvalues)
 		
 

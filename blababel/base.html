@@ -19,7 +19,7 @@
 </head>
 
 <body>
-{% block nevigation %}
+{% block navigation %}
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
  <div class="navbar-header">
   <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -28,11 +28,11 @@
     <span class="icon-bar"></span>
     <span class="icon-bar"></span>
   </button>
-  <a href= "#" class="navbar-brand">Brand Name</a>
+  <a href= "/" class="navbar-brand">BlaBabel</a>
  </div>
  <div class="collapse navbar-collapse navbar-ex1-collapse">
   <ul class="nav navbar-nav pull-left">
-      <li class="active "><a href="#">Home</a></li>
+      <li class="active "><a href="/">Home</a></li>
       <li class="dropdown">
         <a href="/" class="dropdown-toggle" data-toggle="dropdown">Courses<b class="caret"></b></a>
         <ul class="dropdown-menu">
@@ -45,19 +45,20 @@
             <li><a href="/">Separated link</a></li>
         </ul>
       </li>
-      <li><a href="#">Link 1</a></li>
-      <li><a href="#">Link 2</a></li>
-      <li><a href="#">Link 3</a></li>
+      <li><a href="/">Link 1</a></li>
+      <li><a href="/">Link 2</a></li>
+      <li><a href="/">Link 3</a></li>
   </ul>
   <ul class="nav navbar-nav pull-right">
-      <li><a href="#">Link 1</a></li>
+      <li><a href="/">Link 1</a></li>
       {% if not user %}
       <li><a href="/building">Sign Up</a></li>
       <li class="dropdown">
-        <a href="/building" class="dropdown-toggle" data-toggle="dropdown">Log in<b class="caret"></b></a>
+        <a href="/" class="dropdown-toggle" data-toggle="dropdown">Log in<b class="caret"></b></a>
         <ul class="dropdown-menu">
-          <li><a href="#">Link 1</a></li>
-          <li><a href="#">Link 2</a></li>
+          {% for url, name in login %}
+            <li><a href="{{ url }}">{{ name }}</a></li>
+          {% endfor %}
         </ul>
       </li>
       {% else %}
@@ -72,12 +73,25 @@
 {% block user_profile %}
 <center>
 {% if user %}
+  <br><br><br>
   <div>
-    <h1>Welcome~ {{ user.nickname() }}</h1>
-    <h1>Here will be the user profile</h1>
+    <h1>Welcome~ {{ uProfile.username }}</h1>
+    <div>
+    {% for id in uProfile.courses %}
+      <a href="/course-{{ id }}">Course - {{ id }}</a>
+    {% endfor %}
+    </div>
+    <div>
+     {% for lname, score in uProfile.lessons %}
+      <p> You got {{ score }} points in the {{ lname }} </p>
+    {% endfor %}
+    </div>
   </div>
 {% else %}
-  <h1>Welcome~</h1>
+  <div>
+    <br><br><br>
+    <h1>Welcome~</h1>
+  </div>
 {% endif %}
 </center>
 {% endblock %}
@@ -91,7 +105,7 @@
   <div class="container-fluid">
     <br>
     <center>
-    <p>&copy; 2014 <a href="/" style="text-decoration: none">Blababel</a>, Powered By <a href="https://developers.google.com/appengine" style="text-decoration: none">GAE</a> and <a href="http://getbootstrap.com/" style="text-decoration: none">Bootstrap</a>,  Designed by 
+    <p>&copy; 2014 <a href="/" style="text-decoration: none">BlaBabel</a>, Powered By <a href="https://developers.google.com/appengine" style="text-decoration: none">GAE</a> and <a href="http://getbootstrap.com/" style="text-decoration: none">Bootstrap</a>,  Designed by 
     	{% for name, addr in authors %}
     	 <a href="{{ addr }}" style="text-decoration: none"> {{ name }} </a>
     	{% endfor %}

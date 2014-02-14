@@ -13,6 +13,12 @@ class User(db.Model):
 	email = db.StringProperty(required = True)
 	password = db.StringProperty(required = True)
 
+class UserProfile(db.Model):
+	uid = db. IntegerProperty(required=True)
+	username = db.StringProperty(required = True) 
+	courses = ObjectProperty()
+	scores = ObjectProperty()
+
 class Course(db.Model):
 	course_id = db.IntegerProperty(required = True)
 	course_title = db.StringProperty(required = True)
