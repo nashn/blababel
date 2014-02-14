@@ -2,6 +2,14 @@
 {% block title %}Build a Course{% endblock %}
 {% block content %}
 
+{% if not user %}
+<center>
+    <div>
+      <h1>Please Log in to build a course</h1>
+    </div>
+        <a href="/">Back to index </a>
+</center>
+{% else %}
 <center>
 <form class="form-horizontal" method="post">
 	<fieldset>
@@ -52,5 +60,7 @@
 	</fieldset>
 </form>
 </center>
+
+{% endif %}
 
 {% endblock %}

@@ -15,7 +15,7 @@ handlers = [('/base', BasePage),
 			('/about', AboutPage),
 			('/donation', DonationPage),
 			('/game', GamePage),
-			('/profile', ProfilePage),
+			(r'/profile', ProfilePage),
 			#('/logout', LogoutPage),
 
 			#the following is lessons, later

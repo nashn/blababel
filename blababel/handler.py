@@ -172,6 +172,7 @@ class ErrorPage(Handler):
 		self.render('404.html', template_values=tvalues)
 
 
+# this handler needs to be heavily modified
 class ProfilePage(Handler):
 	def get(self):
 		tvalues = {'authors': authors,
