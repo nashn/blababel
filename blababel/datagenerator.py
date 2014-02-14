@@ -27,36 +27,27 @@ entry = entry = Entry(entry_id = %d,
 entry.put()
 '''
 
-f = open('dataloader.txt', 'a')
+def generate(course_info, note, word, mean):
+	f = open('dataloader.txt', 'w')
 
-course_info = [(1, 'Chinese', 'English'), 
-				(2, 'Korean', 'English'), 
-				(3, 'Japanese', 'English')]
-note = 'This is only for testing the data function.'
+	f.write('''from google.appengine.ext import db''')
+	f.write('''from schema import *'''
 
-# add new words here
-word = ['boy', 'man', 'girl', 'woman', 'apple', 'banana', 'pear', 'mac', 'ubuntu', 'windown']
-# add new meaning here
-mean = ['nanhai', 'nanren', 'nvhai', 'nvren', 'pinguo', 'xiangjiao', 'pingguodiannao', 'linuxxitong', 'laji']
 
-for cid, src, dest in course_info:
-	for i in range(1, 5):
-		lesson = '''\nlesson = Lesson(course_id=%d,
-			lesson_id=%d,
-			lesson_title=\'%s\', 
-			author=\'%s\',
-			difficulty='beginner',
-			source_language=\'%s\',
-			destination_language=\'%s\',
-			entries=entry_lists,
-			questions=['','',''],
-			answers=['','',''],
-			notes=\'%s\')
+	f.write('''def load():''')
 
-	lesson.put()\n''' % (cid, i, 'lesson-' + str(i), 'admin', src, dest, note)
-		f.write(lesson)
+	#course_info = [(1, 'Chinese', 'English'), 
+	#				(2, 'Korean', 'English'), 
+	#				(3, 'Japanese', 'English')]
+	#note = 'This is only for testing the data function.'
 
-		for j in range(1, 10-1):
+	# add new words here
+	#word = ['boy', 'man', 'girl', 'woman', 'apple', 'banana', 'pear', 'mac', 'ubuntu', 'windown']
+	# add new meaning here
+	#mean = ['nanhai', 'nanren', 'nvhai', 'nvren', 'pinguo', 'xiangjiao', 'pingguodiannao', 'linuxxitong', 'laji']
+
+	for cid, src, dest in course_info:
+		for j in range(1, len(word)):
 			entry = '''\nentry = Entry(entry_id = %d,
 			lesson_id = %d,
 			imgURLs = '\'img/lesson/cn%d\',
@@ -66,7 +57,7 @@ for cid, src, dest in course_info:
 			destination_language = \'%s\',
 			notes = \'%s\')
 
-	entry.put()\n'''% (j, i, j, word[j], mean[j], src, dest, note)
+		entry.put()\n'''% (j, i, j, word[j], mean[j], src, dest, note)
 			f.write(entry)
 
-f.close()
+	f.close()

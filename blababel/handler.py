@@ -76,9 +76,7 @@ class Handler(webapp2.RequestHandler):
 		template_values['logout'] = logout
 		template_values['uProfile'] = uProfile
 		
-		#if user:
-		#	self.write(JINJA_ENVIRONMENT.get_template('profile.html').render(template_values))
-		#else:
+	
 		self.write(t.render(template_values))
 
 
@@ -92,7 +90,6 @@ class MainPage(Handler):
 	def get(self):
 		#this is for data loading
 		#dataloader.load()
-		user = users.get_current_user()
 		if user:
 			self.render('profile.html', template_values={})
 		else:
@@ -234,15 +231,14 @@ class BuildCourse(Handler):
 		src = self.request.get('src')
 		dest = self.request.get('dest')
 		
-		course = Course(key_name=str(c_id),
-						course_id=c_id, 
+		course = Course(course_id=c_id, 
 						course_title=c_title, 
 						author=author, 
 						source_language=src, 
 						destination_language=dest,
 						imgURL=c_img, 
 						course_description=desc, 
-						lessons=[])
+						lessons=[1,2,3,4,5])
 		course.put()
 
 		print 'good till this point'
@@ -286,10 +282,9 @@ class BuildLesson(Handler):
 		entry_ids = []
 		for i in range(0, len(vocabulary)-1):
 			entry_ids.append(i)
-			entry = Entry(key_name=str(l_id),
-						entry_id = i,
+			entry = Entry(entry_id = i,
 						lesson_id = l_id,
-						imgURLs = images[i],
+						imgURLs = img[i],
 						word = vocabulary[i],
 						mean = meanings[i],
 						source_language = src,
@@ -298,8 +293,7 @@ class BuildLesson(Handler):
 			entry.put()
 
 
-		lesson = Lesson(key_name=str(l_id),
-						course_id=c_id,
+		lesson = Lesson(course_id=c_id,
 						lesson_id=l_id,
 						lesson_title=l_title, 
 						author=author,
@@ -312,11 +306,6 @@ class BuildLesson(Handler):
 						notes=notes)
 		lesson.put()
 
-		course = db.GqlQuery("SELECT * FROM Course WHERE course_id=%d" % c_id).get()
-		lessonList = course.lessons
-		lessonList.append(l_id)
-		course.lessons = lessonList
-		course.put()
 
 		l = db.GqlQuery("SELECT * FROM Lesson WHERE lesson_id=%d" % l_id).get()
 		s = "Success! Here is the entry:\n"
