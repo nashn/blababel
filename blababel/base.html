@@ -36,7 +36,6 @@
  </div>
  <div class="collapse navbar-collapse navbar-ex1-collapse">
   <ul class="nav navbar-nav pull-left">
-      <li class="active "><a href="/">Home</a></li>
       <li class="dropdown">
         <a href="/" class="dropdown-toggle" data-toggle="dropdown">Courses<b class="caret"></b></a>
         <ul class="dropdown-menu">
@@ -49,17 +48,13 @@
             <li><a href="/">Separated link</a></li>
         </ul>
       </li>
-      <li><a href="/">Link 1</a></li>
-      <li><a href="/">Link 2</a></li>
-      <li><a href="/">Link 3</a></li>
   </ul>
   <ul class="nav navbar-nav pull-right">
-      <li><a href="/">Link 1</a></li>
       {% if not user %}
       <li><a href="/building">Sign Up</a></li>
       <li class="dropdown">
         <a href="/" class="dropdown-toggle" data-toggle="dropdown">Log in<b class="caret"></b></a>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu pull-right">
           {% for url, name in login %}
             <li><a href="{{ url }}">{{ name }}</a></li>
           {% endfor %}
@@ -105,18 +100,18 @@
 {% endblock %}
 
 {% block footer %}
-<nav class="navbar navbar-inverse navbar-bottom" role="navigation">
+
+<div id="footer">
   <div class="container-fluid">
-    <br>
     <center>
-    <p>&copy; 2014 <a href="/" style="text-decoration: none">BlaBabel</a>, Powered By <a href="https://developers.google.com/appengine" style="text-decoration: none">GAE</a> and <a href="http://getbootstrap.com/" style="text-decoration: none">Bootstrap</a>,  Designed by 
-    	{% for name, addr in authors %}
-    	 <a href="{{ addr }}" style="text-decoration: none"> {{ name }} </a>
-    	{% endfor %}
-    </p>
+      <p>&copy; 2014 <a href="/" style="text-decoration: none">BlaBabel</a>, Powered By <a href="https://developers.google.com/appengine" style="text-decoration: none">GAE</a> and <a href="http://getbootstrap.com/" style="text-decoration: none">Bootstrap</a>,  Designed by 
+      {% for name, addr in authors %}
+       <a href="{{ addr }}" style="text-decoration: none"> {{ name }} </a>
+      {% endfor %}
+      </p>
     </center>
-  </div><!-- /.container-fluid -->
-</nav>
+  </div>
+</div>
 {% endblock %}
 
 
