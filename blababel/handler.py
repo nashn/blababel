@@ -284,18 +284,21 @@ class BuildLesson(Handler):
 
 		# helper function for creating entries:
 		entry_ids = []
-		for i in range(0, len(vocabulary)-1):
+		entry = []
+		for i in range(0, len(vocabulary)):
 			entry_ids.append(i)
-			entry = Entry(key_name=str(l_id),
-						entry_id = i,
-						lesson_id = l_id,
-						imgURLs = images[i],
-						word = vocabulary[i],
-						mean = meanings[i],
-						source_language = src,
-						destination_language = dest,
-						notes = notes)
-			entry.put()
+			entry.append(Entry(key_name=str(l_id),
+							entry_id = i,
+							lesson_id = l_id,
+							imgURLs = images[i],
+							word = vocabulary[i],
+							mean = meanings[i],
+							source_language = src,
+							destination_language = dest,
+							notes = notes))
+		for i in entry:
+			i.put()
+
 
 
 		lesson = Lesson(key_name=str(l_id),
