@@ -5,19 +5,8 @@ body {
 
 .jumbotron { background-color: transparent; }
 
-.btn-primary {
-    color: #FFF;
-    background-color: #4E94FF;
-    border-color: #1C355C;
-}
-
 #footer { 
 	margin: 300px 0 -65px 0;
-}
-
-.navbar-collapse.collapse { 
-	background-color: #070224;
-	box-shadow: 1px 1px 11px #888888;
 }
 
 canvas:focus { outline: 0; }
