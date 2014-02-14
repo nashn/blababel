@@ -44,12 +44,14 @@ class Handler(webapp2.RequestHandler):
 		sign_up = True
 		
 		user = users.get_current_user()
+		logout = users.create_logout_url(self.request.uri)
+		
 		if user:# signed in already
 			log_in = True
 			sign_up = False
-			self.response.out.write('Hello <em>%s</em>! [<a href="%s">sign out</a>]' % (
-				user.nickname(), users.create_logout_url(self.request.uri)))
-		else:# let user choose authenticator
+			#self.response.out.write('Hello <em>%s</em>! [<a href="%s">sign out</a>]' % (
+			#	user.nickname(), users.create_logout_url(self.request.uri)))
+		if not user:# let user choose authenticator
 			self.response.out.write('Hello world! Sign in at: ')
 			for name, uri in providers.items():
 				self.response.out.write('[<a href="%s">%s</a>]' % (
@@ -60,7 +62,8 @@ class Handler(webapp2.RequestHandler):
 					'course_list': course_list,
 					'user' : user,
 					'log_in': log_in,
-					'sign_up': sign_up
+					'sign_up': sign_up,
+					'logout' : logout
 			}
 
 		self.write(t.render(template_values))
@@ -97,7 +100,13 @@ class MainPage(Handler):
 
 class LogoutPage(Handler):
 	def get(self):
-		MainPage.get()
+		user = users.get_current_user()
+		if user:# signed in already
+			log_in = True
+			sign_up = False
+			self.response.out.write('Hello <em>%s</em>! [<a href="%s">sign out</a>]' % (
+				user.nickname(), users.create_logout_url(self.request.uri)))
+		self.render('index.html', template_values={})
 
 
 #########################################################################
