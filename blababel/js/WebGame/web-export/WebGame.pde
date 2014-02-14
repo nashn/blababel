@@ -17,6 +17,8 @@ Boolean currentButtonIsFinished = true;
 interface JavaScript {
   void getScore(int i);
   void getEndGameResult(bool b);
+  void setSourceStringArray(String[] s);
+  void setDestStringArray(String[] s);
   void pause();
   void restart();
   void btnLeft();
@@ -36,10 +38,20 @@ void scoreIncrease()
   }
 }
 
+void setSourceStringArray(String[] s)
+{
+  srcArray = s;
+}
+
+void setDestStringArray(String[] s)
+{
+  srcArray = s;
+}
+
 void setup()
 {
   size(320, 480);
-  gamePaused = false;
+  gamePaused = true;
   gameOver = false;
   buttonList = new ArrayList<Button>();
   currentButton = new Button(srcArray[0], destArray[0], "c");

@@ -44,7 +44,23 @@ function getProcessingSketchId () { return 'WebGame'; }
       }
 
       function getEndGameResult(b) {
-      	
+
+      }
+
+      var a = new Array();
+      	a[0] = "Test";
+      	a[1] = "Other";
+
+      function setSourceStringArray(s) {
+      	var pjs = Processing.getInstanceById('WebGame');
+      	pjs.setSourceStringArray(s);
+      	pjs.restart();
+      }
+
+      function setDestStringArray(s) {
+      	var pjs = Processing.getInstanceById('WebGame');
+      	pjs.setDestStringArray(s);
+      	pjs.restart();
       }
 </script>
 {% endblock%}
@@ -59,7 +75,7 @@ function getProcessingSketchId () { return 'WebGame'; }
 			<div>
 				<h3>Score: <h3 id="WebGame-score"></h3></h3>
 				<button onclick="pause()">Pause</button>
-				<button onclick="restart()">Restart</button>
+				<button onclick="setSourceStringArray(a)">Restart</button>
 				<canvas id="WebGame" data-processing-sources="js/WebGame/web-export/WebGame.pde"
 						width="320" height="480">
 					<p>Your browser does not support the canvas tag.</p>
