@@ -31,6 +31,10 @@ class Handler(webapp2.RequestHandler):
 		template_values['user'] = user
 		# profile and info page can be created here later
 		t = JINJA_ENVIRONMENT.get_template(template)
+		course_list = db.GqlQuery("SELECT * FROM Course").fetch(1000)
+		template_values = {'authors': authors,
+					'course_list': course_list
+			}
 
 		if not user:
 			sign_up = False
@@ -51,10 +55,10 @@ class MainPage(Handler):
 		#this is for data loading
 		#dataloader.load()
 
-		course_list = db.GqlQuery("SELECT * FROM Course").fetch(1000)
+		#course_list = db.GqlQuery("SELECT * FROM Course").fetch(1000)
 
 		tvalues = {'authors': authors,
-					'course_list': course_list
+		#			'course_list': course_list
 		}
 		self.render('index.html', template_values=tvalues)
 
