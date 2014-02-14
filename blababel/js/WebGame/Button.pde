@@ -4,7 +4,7 @@ class Button
   String destLang;
   String spelling;
   boolean active;
-  
+  static int n = 0;
   int px, py, boxWidth, boxHeight;
   color boxColor;
   color textColor;
@@ -20,7 +20,26 @@ class Button
     py = -100;
     boxWidth = 79;
     boxHeight = 48;
-    boxColor = color(0,0,0);
+    switch(n)
+    {
+      case 1:
+            boxColor = color(255,213,0);
+            break;
+      case 2:
+            boxColor = color(249,100,100);
+            break;
+      case 3:
+            boxColor = color(0 ,153,0);
+            break;
+      case 4:
+            boxColor = color(219,100,249);
+            break;
+      
+    }
+    if(n <=4)
+      n++;
+     else
+      n=0;
     textColor = color(255,255,255);
   }
   
@@ -47,14 +66,13 @@ class Button
     }
     return false;
   }
-  
   public void move()
   {
     if(py >= height-boxHeight) {
       currentButtonIsFinished = true;
       return;
     }
-    py = py + 5;
+    py = py + 3;
   }
   
   public void moveY(int num)
@@ -84,7 +102,7 @@ class Button
     noStroke();
     rect(px, py, boxWidth, boxHeight);
     
-    textSize(12);
+    textSize(20);
     textAlign(CENTER);
     fill(textColor);
     text(srcLang, px, py+10, boxWidth, boxHeight);

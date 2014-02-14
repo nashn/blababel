@@ -1,7 +1,7 @@
 static int GAME_SCORE = 0;
 static boolean gameOver;
 static boolean gamePaused;
-
+static boolean gameStart;
 static float startTime;
 static float currentTime;
 ArrayList<Button> buttonList;
@@ -9,11 +9,15 @@ String[] srcArray = {"boy", "cboy", "girl", "apple", "capple","man", "woman", "c
 String[] destArray = {"cboy", "boy", "cgirl", "capple", "apple","cman", "cwoman", "man"};
 int nextWordIndex;
 
+
+
+
+
 Button currentButton;
 Button nextButton;
 int currentButtonIndex;
 Boolean currentButtonIsFinished = true;
-
+Boolean stopMovingX = false;
 interface JavaScript {
   void getScore(int i);
   void getEndGameResult(bool b);
@@ -51,8 +55,8 @@ void setDestStringArray(String[] s)
 void setup()
 {
   size(320, 480);
-  gamePaused = true;
-  gameOver = false;
+ // gamePaused = true;
+ // gameOver = false;
   buttonList = new ArrayList<Button>();
   currentButton = new Button(srcArray[0], destArray[0], "c");
   buttonList.add(currentButton);
@@ -60,8 +64,21 @@ void setup()
   nextButton = new Button(srcArray[1], destArray[1], "c");
   buttonList.add(nextButton);
   startTime = millis();
+  startPage();
 }
-
+void startPage()
+{
+  gameStart = true;
+  gamePaused = true;
+  textSize(30);
+  textAlign(CENTER);
+  text("   Try to match the", width/2, height/2);
+  text("  translations by using", width/2, height/2+50);
+  text("  <> or LEFT RIGHT", width/2, height/2 +100);
+  fill(0,0,0,150);
+  rect(0,0,width,height);
+  
+}
 void restart()
 {
   gamePaused = false;
@@ -79,7 +96,7 @@ void restart()
 void base()
 {
   // Clear background
-  fill(255,255,255);
+  fill(204,229,255);
   rect(0,0,width,height);
   
   // Draw arrows
@@ -93,7 +110,7 @@ void draw()
   if (gamePaused) {
     return;
   }
-  if (GAME_SCORE == 3) {
+  if (GAME_SCORE == 5) {
     winGame();
     return;
   }
@@ -127,6 +144,7 @@ void draw()
     if (buttonList.get(i) != currentButton) {
       if (buttonList.get(i).isColliding(currentButton)) {
         currentButtonIsFinished = true;
+        stopMovingX = false;
       }
     }
   }
@@ -152,6 +170,11 @@ void mouseClicked()
     currentButton.moveX(-80);
   } else {
     currentButton.moveX(80);
+  }
+  if(gameStart)
+  {
+    gameStart = false;
+    gamePaused = false;
   }
 }
 
