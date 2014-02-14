@@ -284,11 +284,10 @@ class BuildLesson(Handler):
 
 		# helper function for creating entries:
 		entry_ids = []
-		entry = []
+		e = []
 		for i in range(0, len(vocabulary)):
 			entry_ids.append(i)
-			entry.append(Entry(key_name=str(l_id),
-							entry_id = i,
+			e.append(Entry(entry_id = i,
 							lesson_id = l_id,
 							imgURLs = images[i],
 							word = vocabulary[i],
@@ -296,7 +295,7 @@ class BuildLesson(Handler):
 							source_language = src,
 							destination_language = dest,
 							notes = notes))
-		for i in entry:
+		for i in e:
 			i.put()
 
 
