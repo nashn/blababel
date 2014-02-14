@@ -76,16 +76,19 @@
   <br><br><br>
   <div>
     <h1>Welcome~ {{ uProfile.username }}</h1>
+    
     <div>
     {% for id in uProfile.courses %}
       <a href="/course-{{ id }}">Course - {{ id }}</a>
     {% endfor %}
     </div>
+  
     <div>
      {% for lname, score in uProfile.lessons %}
       <p> You got {{ score }} points in the {{ lname }} </p>
     {% endfor %}
     </div>
+  
   </div>
 {% else %}
   <div>
