@@ -21,19 +21,19 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True
     )
 
-providers = {
-    'Google'   : 'https://www.google.com/accounts/o8/id',
-    'Yahoo'    : 'yahoo.com',
-    'MySpace'  : 'myspace.com',
-    'AOL'      : 'aol.com',
-    'MyOpenID' : 'myopenid.com'
+providers = [('Google', 'https://www.google.com/accounts/o8/id'),
+			('Yahoo', 'yahoo.com')
     # add more here
-}
+]
 
-authors = [('Chia-Hao Chen', 'https://github.com/chiahc1'), ('She Nie', 'https://github.com/nashn'), ('Greg Jeckell', 'http://www.gregjeckell.com/')]
+authors = [('Chia-Hao Chen', 'https://github.com/chiahc1'), 
+			('She Nie', 'https://github.com/nashn'), 
+			('Greg Jeckell', 'http://www.gregjeckell.com/')
+]
 
 
 class Handler(webapp2.RequestHandler):
+	
     def write(self, *a, **kw):
         self.response.out.write(*a, **kw)
     
@@ -44,47 +44,53 @@ class Handler(webapp2.RequestHandler):
 		sign_up = True
 		
 		user = users.get_current_user()
+		login = [('/', 'BlaBabel')]
 		logout = users.create_logout_url(self.request.uri)
+		uProfile = None
 		
 		if user:# signed in already
 			log_in = True
 			sign_up = False
+
+			uProfile = db.GqlQuery("SELECT * FROM UserProfile WHERE uid=1").get()
+			if not uProfile:
+				u = UserProfile(uid=1, username=user.nickname(), courses=[0,1], scores=[('lesson1',100)])
+				u.put()
+			uProfile = db.GqlQuery("SELECT * FROM UserProfile WHERE uid=1").get()
+			
 			#self.response.out.write('Hello <em>%s</em>! [<a href="%s">sign out</a>]' % (
 			#	user.nickname(), users.create_logout_url(self.request.uri)))
 		if not user:# let user choose authenticator
-			self.response.out.write('Hello world! Sign in at: ')
-			for name, uri in providers.items():
-				self.response.out.write('[<a href="%s">%s</a>]' % (
-					users.create_login_url(federated_identity=uri), name))
+			for name, uri in providers:
+				login.append(tuple([users.create_login_url(federated_identity=uri), name]))
 
 		course_list = db.GqlQuery("SELECT * FROM Course").fetch(1000)
-		template_values = {'authors': authors,
-					'course_list': course_list,
-					'user' : user,
-					'log_in': log_in,
-					'sign_up': sign_up,
-					'logout' : logout
-			}
 
+		# add new attritube to the dictionary
+		template_values['authors'] = authors
+		template_values['course_list'] = course_list
+		template_values['user'] = user
+		template_values['log_in'] = log_in
+		template_values['sign_up'] = sign_up
+		template_values['login'] = login
+		template_values['logout'] = logout
+		template_values['uProfile'] = uProfile
+		
 		self.write(t.render(template_values))
 
 
 # this handler is just for test:
-class BasePage(Handler):
-	def get(self):
-		self.render('base.html')
+class BasePage(webapp2.RequestHandler):
+	def baseRender(self, template, template_values):
+		t = JINJA_ENVIRONMENT.get_template(template)
+		self.write(t.render(template_values))
 
 class MainPage(Handler):
 	def get(self):
 		#this is for data loading
 		#dataloader.load()
 
-		#course_list = db.GqlQuery("SELECT * FROM Course").fetch(1000)
-
-		tvalues = {'authors': authors,
-		#			'course_list': course_list
-		}
-		self.render('index.html', template_values=tvalues)
+		self.render('index.html', template_values={})
 
 	def post(self):
 		f = self.request.get('firstname')
@@ -98,6 +104,7 @@ class MainPage(Handler):
 		self.response.write(newUser[0].firstname)
 
 
+'''
 class LogoutPage(Handler):
 	def get(self):
 		user = users.get_current_user()
@@ -107,7 +114,7 @@ class LogoutPage(Handler):
 			self.response.out.write('Hello <em>%s</em>! [<a href="%s">sign out</a>]' % (
 				user.nickname(), users.create_logout_url(self.request.uri)))
 		self.render('index.html', template_values={})
-
+'''
 
 #########################################################################
 # The following are static handlers
@@ -177,18 +184,14 @@ class ProfilePage(Handler):
 ####################################################################
 ####################################################################
 #
-#	This part needs to be modified, still working on this part 
+#	The following part is for showing courses and lessons
 #
 ####################################################################
 ####################################################################
 class  CoursePage(Handler):
 	def get(self, course_id):
 		course_info = db.GqlQuery("SELECT * FROM Course WHERE course_id=%d" % int(course_id)).get()
-
-		tvalues = {'authors': authors,
-					'course_info': course_info
-			}
-		self.render('course.html', template_values=tvalues)
+		self.render('course.html', template_values={'course_info' : course_info})
 		
 
 	def post(self):
@@ -196,46 +199,24 @@ class  CoursePage(Handler):
 
 class LessonPage(Handler):
 	def get(self, lesson_id):
-
 		entries = db.GqlQuery("SELECT * FROM Entry WHERE lesson_id=%d" % int(lesson_id)).fetch(1000)
-		tvalues = {'authors': authors,
-					'entries' : entries
-				}
-		self.render('lesson.html', template_values=tvalues)
+		self.render('lesson.html', template_values={'entries' : entries})
 	
 	def post(self):
 		return 0
 
-'''
-####################################################################
-class LessonEntry(Handler):
-	def get(self):
-		tvalues = {'authors': authors
-				}
-		self.render('entry.html', template_values=tvalues)
-		
-class Lesson1Page(Handler):
-	def get(self):		
-		entries = db.GqlQuery("SELECT * FROM ChineseLesson01").fetch(4)
-		tvalues = {'authors': authors,
-					'entry': entries
-							}
-		self.render('Lesson1CN.html', template_values=tvalues)
 
-class ChinesePage(Handler):
-	def get(self):
-		tvalues = {'authors': authors
-			}
-		self.render('build.html', template_values=tvalues)
 ####################################################################
-'''
-
+####################################################################
+#
+#	The following part is for adding courses and lessons
+#
+####################################################################
+####################################################################
 
 class BuildCourse(Handler):
 	def get(self):
-		tvalues = {'authors': authors
-			}
-		self.render('buildCourse.html', template_values=tvalues)
+		self.render('buildCourse.html', template_values={})
 
 	def post(self):
 		c_id = int(self.request.get('course_id'))
@@ -256,19 +237,22 @@ class BuildCourse(Handler):
 						lessons=[1,2,3,4,5])
 		course.put()
 
+		print 'good till this point'
+
 		l = db.GqlQuery("SELECT * FROM Course WHERE course_id=%d" % c_id).get()
 		s = "Success! Here is the entry:\n"
 		s += "%s\n%s\n%s\n%s\n%s\n%s\n%s\n" % (l.course_id,
-			l.course_title, l.author, 
-			l.imgURL, l.course_description,
-			l.source_language, l.destination_language)
-		self.response.write(s)
+			l.course_title,
+			l.author, 
+			l.imgURL, 
+			l.course_description,
+			l.source_language, 
+			l.destination_language)
+		self.response.render('base.html', template_values={'result' : s})
 
 class BuildLesson(Handler):
 	def get(self):
-		tvalues = {'authors': authors
-			}
-		self.render('buildLesson.html', template_values=tvalues)
+		self.render('buildLesson.html', template_values={})
 
 	def post(self):
 		c_id = int(self.request.get('course_id'))
@@ -290,16 +274,21 @@ class BuildLesson(Handler):
 		dest = self.request.get('dest')
 
 
-# helper function for creating entries:
-		entry_lists = buildEntry(l_id=l_id,
-									voca=vocabulary, 
-									mean=meanings, 
-									img=images, 
-									src=src, 
-									dest=dest, 
-									note='this is for testing the entry note function')
+		# helper function for creating entries:
+		entry_ids = []
+		for i in range(0, len(vocabulary)-1):
+			entry_ids.append(i)
+			entry = Entry(entry_id = i,
+						lesson_id = l_id,
+						imgURLs = img[i],
+						word = vocabulary[i],
+						mean = meanings[i],
+						source_language = src,
+						destination_language = dest,
+						notes = notes)
+			entry.put()
 
-		
+
 		lesson = Lesson(course_id=c_id,
 						lesson_id=l_id,
 						lesson_title=l_title, 
@@ -307,15 +296,16 @@ class BuildLesson(Handler):
 						difficulty=difficulty,
 						source_language=src,
 						destination_language=dest,
-						entries=entry_lists,
+						entries=entry_ids,
 						questions=q,
 						answers=a,
 						notes=notes)
 		lesson.put()
 
+
 		l = db.GqlQuery("SELECT * FROM Lesson WHERE lesson_id=%d" % l_id).get()
 		s = "Success! Here is the entry:\n"
-		s += "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" % (l.course_id,
+		s += "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n" % (l.course_id,
 			l.lesson_id, 
 			l.lesson_title, 
 			l.author, 
@@ -326,20 +316,5 @@ class BuildLesson(Handler):
 			l.questions, 
 			l.answers,
 			l.notes)
-		self.response.write(s)
 
-
-	def buildEntry(l_id, voca, means, img, src, dest, note):
-		entry_id = []
-		for i in range(0, len(voca)-1):
-			entry_id.append(i)
-			entry = Entry(entry_id = i,
-						lesson_id = l_id,
-						imgURLs = img[i],
-						word = voca[i],
-						mean = means[i],
-						source_language = src,
-						destination_language = dest,
-						notes = note)
-			entry.put()
-		return entry_id
+		self.render('base.html', template_values={'result' : s})
