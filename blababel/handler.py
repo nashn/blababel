@@ -26,7 +26,10 @@ providers = [('Google', 'https://www.google.com/accounts/o8/id'),
     # add more here
 ]
 
-authors = [('Chia-Hao Chen', 'https://github.com/chiahc1'), ('She Nie', 'https://github.com/nashn'), ('Greg Jeckell', 'http://www.gregjeckell.com/')]
+authors = [('Chia-Hao Chen', 'https://github.com/chiahc1'), 
+			('She Nie', 'https://github.com/nashn'), 
+			('Greg Jeckell', 'http://www.gregjeckell.com/')
+]
 
 
 class Handler(webapp2.RequestHandler):
