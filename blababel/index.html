@@ -23,6 +23,13 @@
 		</form>
 		</div>
 
+		<div class="col-md-5">
+			<h5>Or Login using one of the following:</h5>
+			{% for url, name in login %}
+	            <button type="button" class="btn btn-info btn-md"><a href="{{ url }}">{{ name }}</a></button>
+	        {% endfor %}
+		</div>
+
 		<!--
 		{# elif log_in #}
 		<div class="col-md-6">

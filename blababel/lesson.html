@@ -7,11 +7,9 @@
 
 {% if not entries %}
 <center>
-  <h1> Author is not adding any entry yet. </h1>
+  <h1> Author has not added any entries yet. </h1>
 </center>
 {% else %}
-<center><a href="/game-{{ entries[0].lesson_id }}"> Start Game !</a></center>
-
 <div>
   <h3 style="text-align:left;"> {{ entries[0].notes }} </h>
 </div>
@@ -30,6 +28,8 @@
     </div>
   </div>
 </div>
+
+<center><a href="/game-{{ entries[0].lesson_id }}">Start Challenge!</a></center>
 
 {% endfor %}
 {% endif %}
