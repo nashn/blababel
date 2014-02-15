@@ -251,6 +251,8 @@ class BuildCourse(Handler):
 						lessons=[])
 		course.put()
 
+		
+		'''
 		l = db.GqlQuery("SELECT * FROM Course WHERE course_id=%d" % c_id).get()
 		s = "Success! Here is the entry:\n"
 		s += "%s\n%s\n%s\n%s\n%s\n%s\n%s\n" % (l.course_id,
@@ -260,7 +262,9 @@ class BuildCourse(Handler):
 			l.course_description,
 			l.source_language, 
 			l.destination_language)
-		self.response.render('base.html', template_values={'result' : s})
+		'''
+		s = ''
+		self.render('base.html', template_values={'result' : s})
 
 class BuildLesson(Handler):
 	def get(self):
@@ -315,7 +319,8 @@ class BuildLesson(Handler):
 						notes=notes)
 		lesson.put()
 
-		l = db.GqlQuery("SELECT * FROM Lesson WHERE lesson_id=%d" % l_id).get()
+		'''
+		l = db.GqlQuery("SELECT * FROM Lesson WHERE lesson_id=%d" % l_id).fetch(1)
 		s = "Success! Here is the entry:\n"
 		s += "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n" % (l.course_id,
 			l.lesson_id, 
@@ -328,5 +333,6 @@ class BuildLesson(Handler):
 			l.questions, 
 			l.answers,
 			l.notes)
-
+		'''
+		s = ''
 		self.render('base.html', template_values={'result' : s})
