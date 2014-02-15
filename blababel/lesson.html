@@ -10,7 +10,7 @@
   <h1> Author is not adding any entry yet. </h1>
 </center>
 {% else %}
-<center><a href="/game"> Start Game !</a></center>
+<center><a href="/game-{{ entries[0].lesson_id }}"> Start Game !</a></center>
 
 <div>
   <h3 style="text-align:left;"> {{ entries[0].notes }} </h>

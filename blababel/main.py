@@ -14,7 +14,7 @@ handlers = [('/base', BasePage),
 			('/rank', RankPage),
 			('/about', AboutPage),
 			('/donation', DonationPage),
-			('/game', GamePage),
+			(r'/game-([^/-]+)', GamePage),
 			(r'/profile', ProfilePage),
 			#('/logout', LogoutPage),
 

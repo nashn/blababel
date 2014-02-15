@@ -4,6 +4,7 @@
 import os
 import webapp2
 import jinja2
+import json
 
 from classes.ObjectProperty import ObjectProperty
 from google.appengine.api import users
@@ -157,15 +158,6 @@ class DonationPage(Handler):
 	def post(self):
 		return 0
 
-class GamePage(Handler):
-	def get(self):
-		tvalues = {'authors': authors,
-					'teststring' : 'Hello World'
-					}
-		self.render('game.html', template_values=tvalues)
-
-	def post(self):
-		return 0
 
 # TODO: implement error handler
 class ErrorPage(Handler):
@@ -210,6 +202,25 @@ class LessonPage(Handler):
 	def post(self):
 		return 0
 
+class GamePage(Handler):
+	def get(self, lesson_id):
+		# get all words from entry table
+		# change into JSON later
+		entries = db.GqlQuery("SELECT * FROM Entry WHERE lesson_id=%d" % int(lesson_id)).fetch(1000)
+		v = []
+		t = []
+		for i in entries:
+			v.append(i.word)
+			t.append(i.mean)
+		jsonWords = json.dumps(v)
+		jsonTrans = json.dumps(t)
+		self.render('game.html', template_values={'entries' : entries,
+			'jsonWords' : jsonWords,
+			'jsonTrans' : jsonTrans})
+
+	def post(self):
+		return 0
+
 
 ####################################################################
 ####################################################################
@@ -239,7 +250,7 @@ class BuildCourse(Handler):
 						destination_language=dest,
 						imgURL=c_img, 
 						course_description=desc, 
-						lessons=[1,2,3,4,5])
+						lessons=[])
 		course.put()
 
 		print 'good till this point'
@@ -295,8 +306,7 @@ class BuildLesson(Handler):
 		for i in e:
 			i.put()
 
-		lesson = Lesson(key_name=str(l_id),
-						course_id=c_id,
+		lesson = Lesson(course_id=c_id,
 						lesson_id=l_id,
 						lesson_title=l_title, 
 						author=author,

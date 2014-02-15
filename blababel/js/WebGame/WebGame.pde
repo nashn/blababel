@@ -55,8 +55,8 @@ void setDestStringArray(String[] s)
 void setup()
 {
   size(320, 480);
- // gamePaused = true;
- // gameOver = false;
+  //gamePaused = true;
+  //gameOver = false;
   buttonList = new ArrayList<Button>();
   currentButton = new Button(srcArray[0], destArray[0], "c");
   buttonList.add(currentButton);
@@ -96,6 +96,8 @@ void restart()
 void base()
 {
   // Clear background
+  strokeWeight(10);
+  stroke(128,128,128);
   fill(204,229,255);
   rect(0,0,width,height);
   
@@ -144,7 +146,6 @@ void draw()
     if (buttonList.get(i) != currentButton) {
       if (buttonList.get(i).isColliding(currentButton)) {
         currentButtonIsFinished = true;
-        stopMovingX = false;
       }
     }
   }

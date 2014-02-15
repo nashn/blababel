@@ -55,8 +55,8 @@ void setDestStringArray(String[] s)
 void setup()
 {
   size(320, 480);
- // gamePaused = true;
- // gameOver = false;
+  //gamePaused = true;
+  //gameOver = false;
   buttonList = new ArrayList<Button>();
   currentButton = new Button(srcArray[0], destArray[0], "c");
   buttonList.add(currentButton);
@@ -96,6 +96,8 @@ void restart()
 void base()
 {
   // Clear background
+  strokeWeight(10);
+  stroke(128,128,128);
   fill(204,229,255);
   rect(0,0,width,height);
   
@@ -144,7 +146,6 @@ void draw()
     if (buttonList.get(i) != currentButton) {
       if (buttonList.get(i).isColliding(currentButton)) {
         currentButtonIsFinished = true;
-        stopMovingX = false;
       }
     }
   }
@@ -210,11 +211,11 @@ class Button
   String destLang;
   String spelling;
   boolean active;
-  static int n = 0;
+  static int n = 1;
   int px, py, boxWidth, boxHeight;
   color boxColor;
   color textColor;
-  
+  static boolean stopMovingX = false;
   public Button(String srcLang, String tranLang, String spelling)
   {
     this.srcLang = srcLang;
@@ -226,8 +227,10 @@ class Button
     py = -100;
     boxWidth = 79;
     boxHeight = 48;
+    
     switch(n)
     {
+      
       case 1:
             boxColor = color(255,213,0);
             break;
@@ -240,12 +243,15 @@ class Button
       case 4:
             boxColor = color(219,100,249);
             break;
+      case 5: 
+            boxColor = color(0,0,102);
+            break;
       
     }
     if(n <=4)
       n++;
      else
-      n=0;
+      n=1;
     textColor = color(255,255,255);
   }
   
@@ -264,7 +270,13 @@ class Button
         o.active = false;
         GAME_SCORE++;
         scoreIncrease();
-      }
+    }
+  /* if(this.px + boxWidth + 1 <= o.px && (this.py > o.py + boxHeight && this.py < op.y + boxHeight))
+    {
+      stopMovingX = true;
+      return true;
+    }*/
+      stopMovingX = false;
       if (this.py <= 10) {
         gameOver = true;
       }
@@ -293,7 +305,8 @@ class Button
   public void moveX(int num)
   {
     int temp = px + num;
-    if (temp < 0 || temp >= width) {
+    
+    if (temp < 0 || temp >= width || stopMovingX) {
       return;
     }
     px += num;
@@ -305,8 +318,10 @@ class Button
       return;
     
     fill(boxColor);
-    noStroke();
-    rect(px, py, boxWidth, boxHeight);
+    strokeWeight(1);
+    smooth();
+    stroke(0,0,0);
+    rect(px, py, boxWidth, boxHeight, 10);
     
     textSize(20);
     textAlign(CENTER);
