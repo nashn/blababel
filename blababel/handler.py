@@ -171,10 +171,8 @@ class ErrorPage(Handler):
 # this handler needs to be heavily modified
 class ProfilePage(Handler):
 	def get(self):
-		tvalues = {'authors': authors,
-					'teststring' : 'Hello World'
-					}
-		self.render('profile.html', template_values=tvalues)
+		self.render('profile.html', template_values={})
+		
 	def post(self):
 		return 0
 
@@ -252,8 +250,6 @@ class BuildCourse(Handler):
 						course_description=desc, 
 						lessons=[])
 		course.put()
-
-		print 'good till this point'
 
 		l = db.GqlQuery("SELECT * FROM Course WHERE course_id=%d" % c_id).get()
 		s = "Success! Here is the entry:\n"
