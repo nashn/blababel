@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block title %}This is the main page{% endblock %}
 {% block content %}
+	
 	<div class="row-fluid jumbotron">
-		{% if sign_up %}
 		<div class="col-md-5 col-md-offset-1">
 			<h1>Hello! Welcome to BlaBabel</h1>
 			<p>A crowdsourced language learning site. Connect with others using games and lessons to learn any language from courses developed by the community</p>
@@ -10,49 +10,13 @@
 		</div>
 		
 		<div class="col-md-2">
-		<form method="post">
-			<fieldset>
-				<legend><strong>Sign Up</strong></legend>
-				<input type="text" name="firstname" placeholder="First name"><br>
-				<input type="text" name="lastname" placeholder="Last name"><br>
-				<input type="email" name="email" placeholder="Email"><br>
-				<input type="password" name="password" placeholder="Password"><br>
-				<input type="password" name="passwordRe" placeholder="Password"><br><br>
-				<button class="btn btn-primary btn-lg" type="submit">submit</button><br>
-			</fieldset>
-		</form>
+		
+		<!-- moving pictures later -->
+
+
 		</div>
 
-		<!--
-		<div class="col-md-5">
-			<h5>Or Login using one of the following:</h5>
-			{% for url, name in login %}
-	            <button type="button" class="btn btn-info btn-md"><a href="{{ url }}">{{ name }}</a></button>
-	        {% endfor %}
-		</div> -->
-
-		<!--
-		{# elif log_in #}
-		<div class="col-md-6">
-		<form method="post">
-			<fieldset>
-				<legend><strong>Log In</strong></legend>
-				<input type="email" name="email" placeholder="Email"><br>
-				<input type="password" name="password" placeholder="Password"><br>
-				<button class="btn btn-primary btn-lg" type="submit">submit</button>
-			</fieldset>
-		</form>
-		</div>
-		-->
-		{% else %}
-		<center>
-		<div>
-			<li><a href="/profile">Profile</a></li>
-			<li><a href="/buildCourse">Build a course</a></li>
-			<li><a href="/buildLesson">Build a lesson</a></li>
-		</div>
-		</center>
-		{% endif %}
-
+		
 	</div>
+
 {% endblock %}

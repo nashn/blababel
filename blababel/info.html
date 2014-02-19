@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}This is the main page{% endblock %}
+{% block content %}
+
+{% if not sign_up %}
+{% else %}
+		<h1>Thank you for signing up BlaBabel</h1>
+		<a href="/login">Login</a>
+{% endif %}
+
+{% endblock %}

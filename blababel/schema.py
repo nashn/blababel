@@ -11,6 +11,7 @@ class User(db.Model):
 	firstname = db.StringProperty(required = True)
 	lastname = db.StringProperty(required = True)
 	email = db.StringProperty(required = True)
+	username = db.StringProperty(required = True)
 	password = db.StringProperty(required = True)
 
 class UserProfile(db.Model):

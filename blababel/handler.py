@@ -99,19 +99,40 @@ class MainPage(Handler):
 		else:
 			self.render('index.html', template_values={})
 
+
+#########################################################################
+# The following are for login-related functions
+#########################################################################
+
+class SignupPage(Handler):
+	def get(self):
+		self.render('signup.html', template_values={})
+
 	def post(self):
 		f = self.request.get('firstname')
 		l = self.request.get('lastname')
 		e = self.request.get('email')
+		u = self.request.get('username')
 		p = self.request.get('password')
 		pp = self.request.get('passwordRe')
-		user = User(firstname=f, lastname=l, email=e, password=p)
+		user = User(firstname=f, lastname=l, email=e, username=u, password=p)
 		user.put()
-		newUser = db.GqlQuery("SELECT * FROM User WHERE email=\'%s\'" % e).get()
-		self.response.write('Added new user: '+ newUser.firstname)
+		newUser = User.gql("WHERE username=:1", str(u)).get()
+
+		self.render('info.html', template_values={'sign_up' : True})
 
 
-'''
+
+class LoginPage(Handler):
+	def get(self):
+		user = users.get_current_user()
+		if user:# signed in already
+			log_in = True
+			sign_up = False
+			self.response.out.write('Hello <em>%s</em>! [<a href="%s">sign out</a>]' % (
+				user.nickname(), users.create_logout_url(self.request.uri)))
+		self.render('login.html', template_values={'sign_up' : False})
+
 class LogoutPage(Handler):
 	def get(self):
 		user = users.get_current_user()
@@ -121,7 +142,15 @@ class LogoutPage(Handler):
 			self.response.out.write('Hello <em>%s</em>! [<a href="%s">sign out</a>]' % (
 				user.nickname(), users.create_logout_url(self.request.uri)))
 		self.render('index.html', template_values={})
-'''
+
+# this handler needs to be heavily modified
+class ProfilePage(Handler):
+	def get(self):
+		self.render('profile.html', template_values={})
+		
+	def post(self):
+		return 0
+
 
 #########################################################################
 # The following are static handlers
@@ -181,14 +210,6 @@ class ErrorPage(Handler):
 					}
 		self.render('404.html', template_values=tvalues)
 
-
-# this handler needs to be heavily modified
-class ProfilePage(Handler):
-	def get(self):
-		self.render('profile.html', template_values={})
-		
-	def post(self):
-		return 0
 
 ####################################################################
 ####################################################################

@@ -1,4 +1,4 @@
-blababel
+BlaBabel
 ========
 
 App Jam 2014
@@ -8,6 +8,6 @@ Description:
 
 Members:
 Greg Jeckell
-ChiaHao Chen
+ChiaHao Chen (Gary)
 She Nie (Nash)
 

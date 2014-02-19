@@ -17,10 +17,12 @@ handlers = [('/base', BasePage),
 			('/error', ErrorPage),
 			('/rank', RankPage),
 
+			('/signup', SignupPage),
+			('/login', LoginPage),
+			('/logout', LogoutPage),
 			(r'/game-([^/-]+)', GamePage),
 			(r'/profile', ProfilePage),
-			#('/logout', LogoutPage),
-
+			
 			#the following is lessons, later
 			(r'/course-([^/-]+)', CoursePage),
 			(r'/lesson-([^/-]+)', LessonPage),
