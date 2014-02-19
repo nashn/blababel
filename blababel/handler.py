@@ -39,8 +39,8 @@ class Handler(webapp2.RequestHandler):
 
 	def redir(self, url, template, template_values):
 		self.redirect(url)
-		user = users.get_current_user()
-		self.render(template, template_values={'user' : user})
+		#user = users.get_current_user()
+		self.render(template=template, template_values=template_values)
 	
 	def write(self, *a, **kw):
 		self.response.out.write(*a, **kw)
@@ -139,7 +139,7 @@ class LoginPage(Handler):
 		p = self.request.get('password')
 		user = User.gql("WHERE username=:1 AND password=:2", str(u), str(p)).get()
 		if user:
-			self.redir('/profile', 'profile.html', template_values={'user' : user})
+			self.render('info.html', template_values={'log_in' : 'success'})
 		else:
 			self.render('info.html', template_values={'log_in' : 'fail'})
 
@@ -253,6 +253,10 @@ class GamePage(Handler):
 			t.append(i.mean)
 		jsonWords = json.dumps(v)
 		jsonTrans = json.dumps(t)
+		print jsonWords
+		print jsonTrans
+		#jsonWords = v
+		#jsonTrans = t
 		self.render('game.html', template_values={'entries' : entries,
 			'jsonWords' : jsonWords,
 			'jsonTrans' : jsonTrans})

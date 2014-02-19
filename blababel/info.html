@@ -13,6 +13,12 @@
 	<a href="/login">Login</a>
 {% endif %}
 
+{% if log_in == 'success' %}
+	<script language="javascript">
+	self.location="/profile";
+	</script>
+{% endif %}
+
 {% if build == 'yes' %}
 	<h1>{{ result }}</h1>
 {% endif %}

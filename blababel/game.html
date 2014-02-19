@@ -54,11 +54,17 @@ function getProcessingSketchId () { return 'WebGame'; }
 
       function HtmlEncode(s)
       {
-        return s.replace("&#34;", '\"')
+        return s.replace(/&#34;/g, '\"')
       }
 
-      var jsonWords = "{{ jsonWords }}";
-      var words = HtmlEncode(jsonWords);
+      //var jsonWords = "{{ jsonWords }}";
+      //var words = HtmlEncode(jsonWords);
+
+      //var words = JSON.parse('{{ jsonWords }}');
+      var tmp = HtmlEncode('{{ jsonWords }}');
+      console.log(tmp);
+
+      var words = JSON.parse(tmp);
 
       function setSourceStringArray(s) {
       	var pjs = Processing.getInstanceById('WebGame');
