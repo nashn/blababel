@@ -54,21 +54,30 @@ function getProcessingSketchId () { return 'WebGame'; }
 
       function HtmlEncode(s)
       {
+        //this only replaces one time, using RE to replace all!
         return s.replace(/&#34;/g, '\"')
       }
 
       //var jsonWords = "{{ jsonWords }}";
       //var words = HtmlEncode(jsonWords);
 
-      //var words = JSON.parse('{{ jsonWords }}');
-      var tmp = HtmlEncode('{{ jsonWords }}');
-      console.log(tmp);
+      var tmp1 = HtmlEncode('{{ jsonWords }}');
+      var tmp2 = HtmlEncode('{{ jsonTrans }}');
+      console.log(tmp1);
+      console.log(tmp2);
 
-      var words = JSON.parse(tmp);
+      var words = JSON.parse(tmp1);
+      var trans = JSON.parse(tmp2);
+
+      // this is a test function, feel free to change it
+      function restart() {
+        setSourceStringArray(words); 
+        setDestStringArray(trans);
+      }
 
       function setSourceStringArray(s) {
       	var pjs = Processing.getInstanceById('WebGame');
-        document.getElementById("WebGame-score").innerHTML = s;
+        //document.getElementById("WebGame-score").innerHTML = s;
       	pjs.setSourceStringArray(s);
       	pjs.restart();
       }
@@ -88,7 +97,7 @@ function getProcessingSketchId () { return 'WebGame'; }
 			<div>
 				<h3>Score: <h3 id="WebGame-score"></h3></h3>
 				<button onclick="pause()">Pause</button>
-				<button onclick="setSourceStringArray(words)">Restart</button>
+				<button onclick="restart()">Restart</button>
 				<canvas id="WebGame" data-processing-sources="js/WebGame/web-export/WebGame.pde"
 						width="320" height="480">
 					<p>Your browser does not support the canvas tag.</p>
