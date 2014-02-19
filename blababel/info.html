@@ -2,10 +2,17 @@
 {% block title %}This is the main page{% endblock %}
 {% block content %}
 
-{% if not sign_up %}
+<center>
+{% if sign_up %}
 {% else %}
-		<h1>Thank you for signing up BlaBabel</h1>
-		<a href="/login">Login</a>
+	<h1>Thank you for signing up BlaBabel</h1>
+	<a href="/login">Login</a>
 {% endif %}
+
+{% if log_in == 'fail' %}
+	<h1>Fail to login, please try again</h1>
+	<a href="/login">Login</a>
+{% endif %}
+</center>
 
 {% endblock %}

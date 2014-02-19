@@ -36,25 +36,28 @@ emails = ['chiahc1@uci.edu', 'nies@uci.edu', 'gjeckell@uci.edu']
 
 
 class Handler(webapp2.RequestHandler):
+
+	def redir(self, url, template, template_values):
+		self.redirect(url)
+		user = users.get_current_user()
+		self.render(template, template_values={'user' : user})
 	
-    def write(self, *a, **kw):
-        self.response.out.write(*a, **kw)
-    
-    def render(self, template, template_values, **kw):
+	def write(self, *a, **kw):
+		self.response.out.write(*a, **kw)
+
+	def render(self, template, template_values, **kw):
 		t = JINJA_ENVIRONMENT.get_template(template)
 		
 		log_in = False
 		sign_up = True
 		
 		user = users.get_current_user()
-		login = [('/', 'BlaBabel')]
+		login = [('/login', 'BlaBabel')]
 		logout = users.create_logout_url(self.request.uri)
 		uProfile = None
 		
 		if user:# signed in already
-			log_in = True
-			sign_up = False
-
+			
 			uProfile = db.GqlQuery("SELECT * FROM UserProfile WHERE uid=1").get()
 			if not uProfile:
 				u = UserProfile(uid=1, username=user.nickname(), courses=[0,1], scores=[('lesson1',100)])
@@ -73,8 +76,8 @@ class Handler(webapp2.RequestHandler):
 		template_values['authors'] = authors
 		template_values['course_list'] = course_list
 		template_values['user'] = user
-		template_values['log_in'] = log_in
-		template_values['sign_up'] = sign_up
+		#template_values['log_in'] = log_in
+		#template_values['sign_up'] = sign_up
 		template_values['login'] = login
 		template_values['logout'] = logout
 		template_values['uProfile'] = uProfile
@@ -126,22 +129,24 @@ class SignupPage(Handler):
 class LoginPage(Handler):
 	def get(self):
 		user = users.get_current_user()
-		if user:# signed in already
-			log_in = True
-			sign_up = False
-			self.response.out.write('Hello <em>%s</em>! [<a href="%s">sign out</a>]' % (
-				user.nickname(), users.create_logout_url(self.request.uri)))
-		self.render('login.html', template_values={'sign_up' : False})
+		if user:
+			self.redirect('/profile')
+		else:
+			self.render('login.html', template_values={})	
+
+	def post(self):
+		u = self.request.get('username')
+		p = self.request.get('password')
+		user = User.gql("WHERE username=:1 AND password=:2", str(u), str(p)).get()
+		if user:
+			self.redir('/profile', 'profile.html', template_values={'user' : user})
+		else:
+			self.render('info.html', template_values={'log_in' : 'fail'})
+
 
 class LogoutPage(Handler):
 	def get(self):
-		user = users.get_current_user()
-		if user:# signed in already
-			log_in = True
-			sign_up = False
-			self.response.out.write('Hello <em>%s</em>! [<a href="%s">sign out</a>]' % (
-				user.nickname(), users.create_logout_url(self.request.uri)))
-		self.render('index.html', template_values={})
+		self.render('indexhtml', template_values={})
 
 # this handler needs to be heavily modified
 class ProfilePage(Handler):
