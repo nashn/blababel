@@ -45,6 +45,7 @@ class Lesson(db.Model):
 
 class Entry(db.Model):
 	entry_id = db.IntegerProperty(required = True)
+	course_id = db.IntegerProperty(required = True)
 	lesson_id = db.IntegerProperty(required = True)
 	imgURLs = ObjectProperty()
 	word = db.StringProperty(required=True)

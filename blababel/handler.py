@@ -225,7 +225,8 @@ class ErrorPage(Handler):
 ####################################################################
 class  CoursePage(Handler):
 	def get(self, course_id):
-		course_info = db.GqlQuery("SELECT * FROM Course WHERE course_id=%d" % int(course_id)).get()
+		course_info = Course.gql("WHERE course_id=:1", int(course_id)).get()
+		#lesson_info = Lesson.gql("WHERE course_id=:1", int(course_id)).get()
 		self.render('course.html', template_values={'course_info' : course_info})
 		
 
@@ -233,8 +234,8 @@ class  CoursePage(Handler):
 		return 0
 
 class LessonPage(Handler):
-	def get(self, lesson_id):
-		entries = db.GqlQuery("SELECT * FROM Entry WHERE lesson_id=%d" % int(lesson_id)).fetch(1000)
+	def get(self, course_id, lesson_id):
+		entries = Entry.gql("WHERE course_id=:1 AND lesson_id=:2", int(course_id), int(lesson_id)).fetch(1000)
 		self.render('lesson.html', template_values={'entries' : entries})
 	
 	def post(self):
@@ -291,20 +292,9 @@ class BuildCourse(Handler):
 						lessons=[])
 		course.put()
 
-		
-		'''
-		l = db.GqlQuery("SELECT * FROM Course WHERE course_id=%d" % c_id).get()
-		s = "Success! Here is the entry:\n"
-		s += "%s\n%s\n%s\n%s\n%s\n%s\n%s\n" % (l.course_id,
-			l.course_title,
-			l.author, 
-			l.imgURL, 
-			l.course_description,
-			l.source_language, 
-			l.destination_language)
-		'''
-		s = ''
-		self.render('base.html', template_values={'result' : s})
+		s = "Add a course successfully!"
+
+		self.render('info.html', template_values={'sign_up' : False, 'build' : 'yes', 'result' : s})
 
 class BuildLesson(Handler):
 	def get(self):
@@ -336,6 +326,7 @@ class BuildLesson(Handler):
 		for i in range(0, len(vocabulary)):
 			entry_ids.append(i)
 			e.append(Entry(entry_id = i,
+							course_id = c_id,
 							lesson_id = l_id,
 							imgURLs = images[i],
 							word = vocabulary[i],
@@ -359,20 +350,10 @@ class BuildLesson(Handler):
 						notes=notes)
 		lesson.put()
 
-		'''
-		l = db.GqlQuery("SELECT * FROM Lesson WHERE lesson_id=%d" % l_id).fetch(1)
-		s = "Success! Here is the entry:\n"
-		s += "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n" % (l.course_id,
-			l.lesson_id, 
-			l.lesson_title, 
-			l.author, 
-			l.difficulty, 
-			l.source_language, 
-			l.destination_language,
-			l.entries,
-			l.questions, 
-			l.answers,
-			l.notes)
-		'''
-		s = ''
-		self.render('base.html', template_values={'result' : s})
+		course = Course.gql("WHERE course_id=:1",c_id).get()
+		course.lessons.append(l_id)
+		course.put()
+		
+		s = "Add a lesson successfully!"
+		
+		self.render('info.html', template_values={'build' : 'yes', 'result' : s})

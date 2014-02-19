@@ -25,7 +25,7 @@ handlers = [('/base', BasePage),
 			
 			#the following is lessons, later
 			(r'/course-([^/-]+)', CoursePage),
-			(r'/lesson-([^/-]+)', LessonPage),
+			(r'/course-([^/-]+)-lesson-([^/-]+)', LessonPage),
 			
 			('/buildLesson', BuildLesson),
 			('/buildCourse', BuildCourse)

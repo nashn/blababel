@@ -40,7 +40,7 @@
 	<div><a href="/lesson-1" >Lesson 1</a></div>
 	-->
   	{% for id in course_info.lessons %}
-	    <div><a href="/lesson-{{ id }}" >Lesson {{ id }}</a></div>
+	    <div><a href="/course-{{ course_info.course_id }}-lesson-{{ id }}" >Lesson {{ id }}</a></div>
   	{% endfor %}
 
   </div>

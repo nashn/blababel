@@ -4,7 +4,6 @@
 
 <center>
 {% if sign_up %}
-{% else %}
 	<h1>Thank you for signing up BlaBabel</h1>
 	<a href="/login">Login</a>
 {% endif %}
@@ -13,6 +12,13 @@
 	<h1>Fail to login, please try again</h1>
 	<a href="/login">Login</a>
 {% endif %}
+
+{% if build == 'yes' %}
+	<h1>{{ result }}</h1>
+{% endif %}
+
 </center>
+
+
 
 {% endblock %}
