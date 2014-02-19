@@ -49,7 +49,21 @@ void setSourceStringArray(String[] s)
 
 void setDestStringArray(String[] s)
 {
-  srcArray = s;
+  destArray = s;
+}
+
+void randomizeArrays(String[] a, String[] b)
+{
+  for (int i=0; i < a.length; ++i) {
+    int bool = Math.floor((Math.random()*2)+1);
+    if (bool == 1) {
+      int rand = Math.floor((Math.random()*a.length));
+      console.log(rand);
+      String temp = a[rand];
+      a[rand] = b[rand];
+      b[rand] = temp;
+    }
+  }
 }
 
 void setup()
@@ -81,6 +95,7 @@ void startPage()
 }
 void restart()
 {
+  randomizeArrays(srcArray, destArray);
   gamePaused = false;
   gameOver = false;
   GAME_SCORE = 0;
@@ -176,6 +191,7 @@ void mouseClicked()
   {
     gameStart = false;
     gamePaused = false;
+    randomizeArrays(srcArray, destArray);
   }
 }
 

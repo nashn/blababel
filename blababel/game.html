@@ -58,9 +58,6 @@ function getProcessingSketchId () { return 'WebGame'; }
         return s.replace(/&#34;/g, '\"')
       }
 
-      //var jsonWords = "{{ jsonWords }}";
-      //var words = HtmlEncode(jsonWords);
-
       var tmp1 = HtmlEncode('{{ jsonWords }}');
       var tmp2 = HtmlEncode('{{ jsonTrans }}');
       console.log(tmp1);
@@ -71,21 +68,25 @@ function getProcessingSketchId () { return 'WebGame'; }
 
       // this is a test function, feel free to change it
       function restart() {
-        setSourceStringArray(words); 
-        setDestStringArray(trans);
+        var pjs = Processing.getInstanceById('WebGame');
+        setWordArrays(words, trans);
+        pjs.restart();
+      }
+
+      function setWordArrays(s, d) {
+        var pjs = Processing.getInstanceById('WebGame');
+        pjs.setSourceStringArray(d);
+        pjs.setDestStringArray(s);
       }
 
       function setSourceStringArray(s) {
       	var pjs = Processing.getInstanceById('WebGame');
-        //document.getElementById("WebGame-score").innerHTML = s;
       	pjs.setSourceStringArray(s);
-      	pjs.restart();
       }
 
       function setDestStringArray(s) {
       	var pjs = Processing.getInstanceById('WebGame');
       	pjs.setDestStringArray(s);
-      	pjs.restart();
       }
 </script>
 {% endblock%}
