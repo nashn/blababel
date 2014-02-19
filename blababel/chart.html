@@ -13,21 +13,7 @@
 {% endblock %}
 
 {% block content %}
-
-<center>
-<div>
-{% if not user %}
-  <center>
-    <div>
-      <h1>Please Log in to confirm identity</h1>
-    </div>
-      <a href="/login">Login</a>
-      <a href="/">Back to index </a>
-  </center>
-{% else %}
-<h1> Welcome </h1>
-
-
+<!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav side-nav">
             <li class="active">
@@ -39,21 +25,13 @@
           </ul>
         </div>
 
-<!-------------------------
+
 <center>
 <ul class="list-group" style="width: 500px;">
-  <li class="list-group-item">Chinese
-	<div class="progress progress-striped active">
-  		<div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-    			<span class="sr-only">45% Complete</span>
-  		</div>
-	 </div>
-	
-  </li>
-  <li class="list-group-item">Dapibus ac facilisis in
+  <li class="list-group-item">
        <div class="row">
           <div class="col-lg-12">
-            <h2>morris.js Charts</h2>
+            <h2>Score Chart</h2>
             <div class="panel panel-primary">
               <div class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Scores</h3>
@@ -64,8 +42,7 @@
             </div>
           </div>
         </div>
-</center>-->
-{% endif %}
+</center>
 
 
 
@@ -81,6 +58,14 @@
     <script src="js/tablesorter/jquery.tablesorter.js"></script>
     <script src="js/tablesorter/tables.js"></script>
 
+
+
+
+
+
+
+
+
+
+
 {% endblock %}
-
-
