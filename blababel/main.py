@@ -20,7 +20,7 @@ handlers = [('/base', BasePage),
 			('/signup', SignupPage),
 			('/login', LoginPage),
 			('/logout', LogoutPage),
-			(r'/game-([^/-]+)', GamePage),
+			(r'/game-([^/-]+)-([^/-]+)', GamePage),
 			(r'/profile', ProfilePage),
 			
 			#the following is lessons, later

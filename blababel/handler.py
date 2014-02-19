@@ -242,10 +242,10 @@ class LessonPage(Handler):
 		return 0
 
 class GamePage(Handler):
-	def get(self, lesson_id):
+	def get(self, course_id, lesson_id):
 		# get all words from entry table
 		# change into JSON later
-		entries = db.GqlQuery("SELECT * FROM Entry WHERE lesson_id=%d" % int(lesson_id)).fetch(1000)
+		entries = Entry.gql("WHERE course_id=:1 AND lesson_id=:2", int(course_id), int(lesson_id)).fetch(1000)
 		v = []
 		t = []
 		for i in entries:
