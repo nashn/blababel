@@ -361,3 +361,19 @@ class BuildLesson(Handler):
 		s = "Add a lesson successfully!"
 		
 		self.render('info.html', template_values={'build' : 'yes', 'result' : s, 'course' : course})
+
+
+####################################################################
+####################################################################
+#
+#	The following part is for profile
+#
+####################################################################
+####################################################################
+
+class chartPage(Handler):
+	def get(self):
+		self.render('chart.html', template_values={})
+class ProgressPage(Handler):
+	def get(self):
+		self.render('CourseProgress.html', template_values={})
