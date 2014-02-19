@@ -32,6 +32,8 @@ authors = [('Chia-Hao Chen', 'https://github.com/chiahc1'),
 			('Greg Jeckell', 'http://www.gregjeckell.com/')
 ]
 
+emails = ['chiahc1@uci.edu', 'nies@uci.edu', 'gjeckell@uci.edu']
+
 
 class Handler(webapp2.RequestHandler):
 	
@@ -124,6 +126,25 @@ class LogoutPage(Handler):
 #########################################################################
 # The following are static handlers
 #########################################################################
+class AboutPage(Handler):
+	def get(self):
+		tvalues = {'authors': authors
+					}
+		self.render('about.html', template_values=tvalues)
+
+class ContactPage(Handler):
+	def get(self):
+		tvalues = {'emails' : emails
+					}
+		self.render('contact.html', template_values=tvalues)
+
+	def post(self):
+		return 0
+
+
+#########################################################################
+# Unused now, later
+#########################################################################
 class BuildPage(Handler):
 	def get(self):
 		tvalues = {'authors': authors,
@@ -140,13 +161,6 @@ class RankPage(Handler):
 	
 	def post(self):
 		return 0
-
-class AboutPage(Handler):
-	def get(self):
-		tvalues = {'authors': authors,
-					'teststring' : 'Hello World'
-					}
-		self.render('about.html', template_values=tvalues)
 
 class DonationPage(Handler):
 	def get(self):

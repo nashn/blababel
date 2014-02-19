@@ -10,10 +10,13 @@ from handler import *
 handlers = [('/base', BasePage),
 			('/', MainPage),
 			('/building', BuildPage),
+			('/about', AboutPage),
+			('/contact', ContactPage),
+			# these are for later
+			('/donation', DonationPage),
 			('/error', ErrorPage),
 			('/rank', RankPage),
-			('/about', AboutPage),
-			('/donation', DonationPage),
+
 			(r'/game-([^/-]+)', GamePage),
 			(r'/profile', ProfilePage),
 			#('/logout', LogoutPage),
