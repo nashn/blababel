@@ -146,7 +146,7 @@ class LoginPage(Handler):
 
 class LogoutPage(Handler):
 	def get(self):
-		self.render('indexhtml', template_values={})
+		self.render('index.html', template_values={})
 
 # this handler needs to be heavily modified
 class ProfilePage(Handler):
@@ -298,7 +298,7 @@ class BuildCourse(Handler):
 
 		s = "Add a course successfully!"
 
-		self.render('info.html', template_values={'sign_up' : False, 'build' : 'yes', 'result' : s})
+		self.render('info.html', template_values={'sign_up' : False, 'build' : 'yes', 'result' : s, 'course' : course})
 
 class BuildLesson(Handler):
 	def get(self):
@@ -360,4 +360,4 @@ class BuildLesson(Handler):
 		
 		s = "Add a lesson successfully!"
 		
-		self.render('info.html', template_values={'build' : 'yes', 'result' : s})
+		self.render('info.html', template_values={'build' : 'yes', 'result' : s, 'course' : course})
