@@ -28,7 +28,9 @@ handlers = [('/base', BasePage),
 			(r'/course-([^/-]+)-lesson-([^/-]+)', LessonPage),
 			
 			('/buildLesson', BuildLesson),
-			('/buildCourse', BuildCourse)
+			('/buildCourse', BuildCourse),
+			('/chart', chartPage),
+			('/courseProgress', ProgressPage)
 ]
-
+	
 application = webapp2.WSGIApplication(handlers, debug=True)
